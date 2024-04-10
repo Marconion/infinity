@@ -1,0 +1,37 @@
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.naslovna-slika {
+  width: 350%;
+  height: 100%;
+  position: relative;
+  object-fit: cover;
+  top: 50%;
+  left: -110%;
+  transform: translate(-50%, -50%);
+  transform: scale(2) rotate(-0.2deg);
+  filter: blur(1px);
+
+  z-index: -1;
+}
+
+.misli {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0);
+}
+
+.image-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -180%);
+  color: white;
+  text-align: center;
+}
