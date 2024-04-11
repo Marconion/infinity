@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createHashRouter } from "react-router-dom";
 import { Rezervacije } from "./components/Rezervacije.jsx";
 import { Galerija } from "./components/Galerija.jsx";
 import { Kontakt } from "./components/Kontakt.jsx";
@@ -22,7 +22,7 @@ const theme = createTheme({
   },
 });
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <App />,

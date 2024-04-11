@@ -3,11 +3,13 @@ import NavBar from "./Navbar";
 import { Typography, Stack } from "@mui/material";
 import { Footer } from "./Footer";
 import "../components/kontakt.css";
+import water2 from "../assets/images/water (2).jpg";
 
 export const Kontakt = () => {
   return (
     <div>
       <NavBar />
+      {/* <img src={water2} alt="water2" className="grayscale" /> */}
       <div className="grayscale">
         <Typography
           variant="h5"

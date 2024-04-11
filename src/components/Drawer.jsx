@@ -6,6 +6,11 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import naslovnaSlika from "../assets/images/infinity-house-logo-1.png";
 import { Link } from "react-router-dom";
+import vector1 from "../assets/design_images/Vector 1.png";
+import ImageIcon from "@mui/icons-material/Image";
+import HomeIcon from "@mui/icons-material/Home";
+import BeenhereIcon from "@mui/icons-material/Beenhere";
+import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 
 export default function SideMenu() {
   const [open, setOpen] = React.useState(false);
@@ -16,6 +21,19 @@ export default function SideMenu() {
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          position: "absolute",
+          zIndex: -1,
+        }}>
+        <img
+          src={vector1}
+          alt="infinity pool house"
+          style={{ width: "100%" }}
+        />
+      </Box>
       <Stack spacing={2} sx={{ m: 4 }}>
         <img
           src={naslovnaSlika}
@@ -24,28 +42,55 @@ export default function SideMenu() {
         />
         <Link to="/">
           <Button>
-            <Typography variant="h7">Home</Typography>
+            <Stack direction="row" spacing={2} alignItems={"center"}>
+              <HomeIcon />
+              <Typography variant="h7">Home</Typography>
+            </Stack>
           </Button>
         </Link>
         <Divider />
         <Link to="/galerija">
           <Button>
-            <Typography variant="h7">Galerija</Typography>
+            <Stack direction="row" spacing={2} alignItems={"center"}>
+              <ImageIcon />
+              <Typography variant="h7">Galerija</Typography>
+            </Stack>
           </Button>
         </Link>
         <Divider />
         <Link to="/rezervacije">
           <Button>
-            <Typography variant="h7">Rezervacije</Typography>
+            <Stack direction="row" spacing={2} alignItems={"center"}>
+              <BeenhereIcon />
+              <Typography variant="h7">Rezervacije</Typography>
+            </Stack>
           </Button>
         </Link>
         <Divider />
         <Link to="/kontakt">
           <Button>
-            <Typography variant="h7">Kontakt</Typography>
+            <Stack direction="row" spacing={2} alignItems={"center"}>
+              <ConnectWithoutContactIcon />
+              <Typography variant="h7">Kontakt</Typography>
+            </Stack>
           </Button>
         </Link>
       </Stack>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          position: "absolute",
+          bottom: 0,
+          transform: "rotate(180deg)",
+          zIndex: -1,
+        }}>
+        <img
+          src={vector1}
+          alt="infinity pool house"
+          style={{ width: "100%" }}
+        />
+      </Box>
     </Box>
   );
 

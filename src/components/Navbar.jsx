@@ -1,6 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
+import { Box, Stack, Button, Typography, Divider } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import logo from "../assets/images/infinity-house-logo-2.png";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -9,10 +9,10 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function NavBar() {
-  const matches = useMediaQuery("(max-width:600px)");
+  const matches = useMediaQuery("(max-width:768px)");
 
   return (
-    <Box sx={{ position: "sticky", top: 0 }}>
+    <Box sx={{ position: "sticky", top: 0, zIndex: 1 }}>
       <AppBar position="static" sx={{ width: "100%" }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Link
@@ -28,7 +28,43 @@ export default function NavBar() {
               height={matches ? "30" : "50"}
             />
           </Link>
-          <SideMenu />
+          {!matches && (
+            <Stack direction={"row"}>
+              <Link to="/">
+                <Button>
+                  <Typography variant="h7" sx={{ color: "white" }}>
+                    Home
+                  </Typography>
+                </Button>
+              </Link>
+              <Divider />
+              <Link to="/galerija">
+                <Button>
+                  <Typography variant="h7" sx={{ color: "white" }}>
+                    Galerija
+                  </Typography>
+                </Button>
+              </Link>
+              <Divider />
+              <Link to="/rezervacije">
+                <Button>
+                  <Typography variant="h7" sx={{ color: "white" }}>
+                    Rezervacije
+                  </Typography>
+                </Button>
+              </Link>
+              <Divider />
+              <Link to="/kontakt">
+                <Button>
+                  <Typography variant="h7" sx={{ color: "white" }}>
+                    Kontakt
+                  </Typography>
+                </Button>
+              </Link>
+            </Stack>
+          )}
+
+          {matches && <SideMenu />}
         </Toolbar>
       </AppBar>
     </Box>

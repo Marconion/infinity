@@ -1,6 +1,8 @@
 .grayscale {
-  background-image: url("../assets/images/water.jpg");
+  background-image: url("../assets/images/water (2).jpg");
+
   height: 100vh;
   background-size: cover;
   background-position: center;
+  /* background-color: #2f5b82; */
 }
