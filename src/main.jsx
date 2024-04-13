@@ -8,6 +8,7 @@ import { RouterProvider, createHashRouter } from "react-router-dom";
 import { Rezervacije } from "./components/Rezervacije.jsx";
 import { Galerija } from "./components/Galerija.jsx";
 import { Kontakt } from "./components/Kontakt.jsx";
+import { RezervacijePage } from "./components/ReservacijePage.jsx";
 
 const theme = createTheme({
   palette: {
@@ -29,7 +30,7 @@ const router = createHashRouter([
   },
   {
     path: "/rezervacije",
-    element: <Rezervacije />,
+    element: <RezervacijePage />,
   },
   {
     path: "/galerija",

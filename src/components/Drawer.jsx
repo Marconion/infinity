@@ -11,6 +11,7 @@ import ImageIcon from "@mui/icons-material/Image";
 import HomeIcon from "@mui/icons-material/Home";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+import { motion } from "framer-motion";
 
 export default function SideMenu() {
   const [open, setOpen] = React.useState(false);
@@ -42,7 +43,7 @@ export default function SideMenu() {
         />
         <Link to="/">
           <Button>
-            <Stack direction="row" spacing={2} alignItems={"center"}>
+            <Stack direction="row" spacing={1} alignItems={"center"}>
               <HomeIcon />
               <Typography variant="h7">Home</Typography>
             </Stack>
@@ -51,7 +52,7 @@ export default function SideMenu() {
         <Divider />
         <Link to="/galerija">
           <Button>
-            <Stack direction="row" spacing={2} alignItems={"center"}>
+            <Stack direction="row" spacing={1} alignItems={"center"}>
               <ImageIcon />
               <Typography variant="h7">Galerija</Typography>
             </Stack>
@@ -60,7 +61,7 @@ export default function SideMenu() {
         <Divider />
         <Link to="/rezervacije">
           <Button>
-            <Stack direction="row" spacing={2} alignItems={"center"}>
+            <Stack direction="row" spacing={1} alignItems={"center"}>
               <BeenhereIcon />
               <Typography variant="h7">Rezervacije</Typography>
             </Stack>
@@ -69,7 +70,7 @@ export default function SideMenu() {
         <Divider />
         <Link to="/kontakt">
           <Button>
-            <Stack direction="row" spacing={2} alignItems={"center"}>
+            <Stack direction="row" spacing={1} alignItems={"center"}>
               <ConnectWithoutContactIcon />
               <Typography variant="h7">Kontakt</Typography>
             </Stack>
@@ -105,6 +106,7 @@ export default function SideMenu() {
         onClick={toggleDrawer(true)}>
         <MenuIcon sx={{ color: "white" }} />
       </IconButton>
+
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>

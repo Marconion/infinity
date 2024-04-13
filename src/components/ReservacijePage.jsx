@@ -7,10 +7,11 @@ import { loadStripe } from "@stripe/stripe-js";
 import { motion } from "framer-motion";
 import HorizontalLinearStepper from "./Stepper";
 
-export const Rezervacije = () => {
+export const RezervacijePage = () => {
   return (
     <div>
-      {" "}
+      <NavBar />
+      <HorizontalLinearStepper />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -21,12 +22,17 @@ export const Rezervacije = () => {
           alignItems={"center"}
           py={5}
           mb={5}>
-          <Typography variant="h3" sx={{ color: "secondary.main" }}>
+          {/* <Typography variant="h3" sx={{ color: "secondary.main" }}>
             Rezervacije
-          </Typography>
-          <ActionBarComponentProps />
+          </Typography> */}
+          <Stack
+            direction="column"
+            spacing={2}
+            alignItems={"center"}
+            pb={5}></Stack>
         </Stack>
       </motion.div>
+      <Footer />
     </div>
   );
 };
