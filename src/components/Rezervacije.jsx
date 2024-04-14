@@ -1,11 +1,7 @@
 import { React, useState } from "react";
-import NavBar from "./Navbar";
-import { Footer } from "./Footer";
-import { Stack, Typography, Button } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import ActionBarComponentProps from "./Calendar";
-import { loadStripe } from "@stripe/stripe-js";
 import { motion } from "framer-motion";
-import HorizontalLinearStepper from "./Stepper";
 
 export const Rezervacije = () => {
   return (
@@ -19,10 +15,10 @@ export const Rezervacije = () => {
           direction="column"
           spacing={2}
           alignItems={"center"}
-          py={5}
-          mb={5}>
-          <Typography variant="h3" sx={{ color: "secondary.main" }}>
-            Rezervacije
+          py={2}
+          mb={8}>
+          <Typography variant="h5" sx={{ color: "secondary.main" }}>
+            Izaberite datum
           </Typography>
           <ActionBarComponentProps />
         </Stack>

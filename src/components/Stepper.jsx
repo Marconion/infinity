@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -6,14 +7,24 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Rezervacije } from "./Rezervacije";
-import { MapaVelikiBazen } from "./MapaVelikiBazen";
+import MapaVelikiBazen from "./MapaVelikiBazen";
+import { Placanje } from "./Placanje";
+import ActionBarComponentProps from "./Calendar";
+import { DateContext } from "../contexts/DateContext";
+import { MapaVelikiBazen2 } from "./MapaVelikiBazen2";
 
-const steps = ["Izaberite datum", "Izaberite krevet ili lazybag", "Plaćanje"];
+const steps = ["Datum", "Krevet ili lazybag", "Kontakt"];
 
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
+  const [selectedDate] = useContext(DateContext);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [note, setNote] = useState("");
+
+  console.log(name, phone, note, selectedDate);
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -57,8 +68,17 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-    <Box sx={{ width: "90%", p: 2 }}>
-      <Stepper activeStep={activeStep}>
+    <Box
+      sx={{
+        width: "91%",
+        display: "flex",
+        position: "relative",
+        flexDirection: "column",
+        p: 2,
+        justifyContent: "space-evenly",
+        // alignItems: "center",
+      }}>
+      <Stepper activeStep={activeStep} sx={{ mt: 0, pt: 0 }}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
@@ -83,7 +103,7 @@ export default function HorizontalLinearStepper() {
       {activeStep === steps.length ? (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+            Rezervisali ste. Hvala na poverenju !
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
@@ -92,8 +112,12 @@ export default function HorizontalLinearStepper() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              pt: 2,
+            }}>
             <Button
               color="inherit"
               disabled={activeStep === 0}
@@ -110,9 +134,13 @@ export default function HorizontalLinearStepper() {
 
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? "Finish" : "Next"}
+
+              {/* Store name, phone and note on next */}
             </Button>
           </Box>
-          {activeStep === 0 ? <Rezervacije /> : <MapaVelikiBazen />}
+          {activeStep === 0 ? <Rezervacije /> : null}
+          {activeStep === 1 ? <MapaVelikiBazen2 /> : null}
+          {activeStep === 2 ? <Placanje /> : null}
         </React.Fragment>
       )}
     </Box>
