@@ -1,14 +1,18 @@
-import { React, useState } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import { Stack, Typography, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { motion } from "framer-motion";
+import { DateContext } from "../contexts/DateContext";
 
 export const Placanje = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [note, setNote] = useState("");
 
-  console.log(name, phone, note);
+  const { calendarValue } = useContext(DateContext);
+  console.log(calendarValue);
+
+  // console.log(name, phone, note);
 
   return (
     <div>
@@ -27,6 +31,12 @@ export const Placanje = () => {
           <Typography variant="h5" sx={{ color: "secondary.main" }}>
             Plaćanje
           </Typography>
+
+          <Stack direction="column" spacing={2} alignItems={"center"} pb={15}>
+            <Typography variant="h6" sx={{ color: "secondary.main" }}>
+              {calendarValue}
+            </Typography>
+          </Stack>
 
           {/* FORM */}
           <Stack

@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { Stack, Typography } from "@mui/material";
-import ActionBarComponentProps from "./Calendar";
+import Calendar from "./Calendar";
 import { motion } from "framer-motion";
 
 export const Rezervacije = () => {
@@ -20,7 +20,7 @@ export const Rezervacije = () => {
           <Typography variant="h5" sx={{ color: "secondary.main" }}>
             Izaberite datum
           </Typography>
-          <ActionBarComponentProps />
+          <Calendar />
         </Stack>
       </motion.div>
     </div>

@@ -5,10 +5,10 @@ import "./index.css";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { RouterProvider, createHashRouter } from "react-router-dom";
-import { Rezervacije } from "./components/Rezervacije.jsx";
 import { Galerija } from "./components/Galerija.jsx";
 import { Kontakt } from "./components/Kontakt.jsx";
 import { RezervacijePage } from "./components/ReservacijePage.jsx";
+import { Ponuda } from "./components/Ponuda.jsx";
 
 const theme = createTheme({
   palette: {
@@ -27,6 +27,10 @@ const router = createHashRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/ponuda",
+    element: <Ponuda />,
   },
   {
     path: "/rezervacije",

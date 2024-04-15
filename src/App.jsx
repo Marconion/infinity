@@ -1,4 +1,5 @@
 import "./App.css";
+import React, { useState } from "react";
 import { Stack, Typography, Button, Box } from "@mui/material";
 import NavBar from "./components/Navbar";
 import naslovnaSlika from "./assets/images/Infinity-1.jpg";
@@ -8,7 +9,6 @@ import { Footer } from "./components/Footer";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Opis } from "./components/Opis";
-import WavesIcon from "@mui/icons-material/Waves";
 
 function App() {
   const matches = useMediaQuery("(max-width:768px)");
@@ -31,7 +31,10 @@ function App() {
             <Typography
               variant="h5"
               className="misli"
-              sx={{ fontSize: matches ? "14px" : "25px", fontStyle: "italic" }}>
+              sx={{
+                fontSize: matches ? "14px" : "25px",
+                fontStyle: "italic",
+              }}>
               "{misli[randomIndex].text}
               " <br />
               <br />

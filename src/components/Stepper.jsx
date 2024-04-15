@@ -19,12 +19,13 @@ export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
-  const [selectedDate] = useContext(DateContext);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [note, setNote] = useState("");
 
-  console.log(name, phone, note, selectedDate);
+  const { selectedDate } = useContext(DateContext);
+
+  // console.log(name, phone, note);
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -68,81 +69,83 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-    <Box
-      sx={{
-        width: "91%",
-        display: "flex",
-        position: "relative",
-        flexDirection: "column",
-        p: 2,
-        justifyContent: "space-evenly",
-        // alignItems: "center",
-      }}>
-      <Stepper activeStep={activeStep} sx={{ mt: 0, pt: 0 }}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          //   if (isStepOptional(index)) {
-          //     labelProps.optional = (
-          //       <Typography variant="caption">Optional</Typography>
-          //     );
-          //   }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>
-                <Typography fontSize={"11px"}>{label}</Typography>
-              </StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+    <DateContext.Provider value={{ selectedDate }}>
+      <Box
+        sx={{
+          width: "91%",
+          display: "flex",
+          position: "relative",
+          flexDirection: "column",
+          p: 2,
+          justifyContent: "space-evenly",
+          // alignItems: "center",
+        }}>
+        <Stepper activeStep={activeStep} sx={{ mt: 0, pt: 0 }}>
+          {steps.map((label, index) => {
+            const stepProps = {};
+            const labelProps = {};
+            //   if (isStepOptional(index)) {
+            //     labelProps.optional = (
+            //       <Typography variant="caption">Optional</Typography>
+            //     );
+            //   }
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>
+                  <Typography fontSize={"11px"}>{label}</Typography>
+                </StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
 
-      {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            Rezervisali ste. Hvala na poverenju !
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              pt: 2,
-            }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}>
-              Back
-            </Button>
-            <Box sx={{ flex: "1 1 auto" }} />
-            {/* {isStepOptional(activeStep) && (
+        {activeStep === steps.length ? (
+          <React.Fragment>
+            <Typography sx={{ mt: 2, mb: 1 }}>
+              Rezervisali ste. Hvala na poverenju !
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              <Box sx={{ flex: "1 1 auto" }} />
+              <Button onClick={handleReset}>Reset</Button>
+            </Box>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                pt: 2,
+              }}>
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}>
+                Back
+              </Button>
+              <Box sx={{ flex: "1 1 auto" }} />
+              {/* {isStepOptional(activeStep) && (
                 <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
                 </Button>
             )} */}
 
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              <Button onClick={handleNext}>
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
 
-              {/* Store name, phone and note on next */}
-            </Button>
-          </Box>
-          {activeStep === 0 ? <Rezervacije /> : null}
-          {activeStep === 1 ? <MapaVelikiBazen2 /> : null}
-          {activeStep === 2 ? <Placanje /> : null}
-        </React.Fragment>
-      )}
-    </Box>
+                {/* Store name, phone and note on next */}
+              </Button>
+            </Box>
+            {activeStep === 0 ? <Rezervacije /> : null}
+            {activeStep === 1 ? <MapaVelikiBazen2 /> : null}
+            {activeStep === 2 ? <Placanje /> : null}
+          </React.Fragment>
+        )}
+      </Box>
+    </DateContext.Provider>
   );
 }

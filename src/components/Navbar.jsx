@@ -38,6 +38,14 @@ export default function NavBar() {
                 </Button>
               </Link>
               <Divider />
+              <Link to="/ponuda">
+                <Button>
+                  <Typography variant="h7" sx={{ color: "white" }}>
+                    Ponuda
+                  </Typography>
+                </Button>
+              </Link>
+              <Divider />
               <Link to="/galerija">
                 <Button>
                   <Typography variant="h7" sx={{ color: "white" }}>

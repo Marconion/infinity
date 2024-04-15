@@ -11,6 +11,7 @@ import ImageIcon from "@mui/icons-material/Image";
 import HomeIcon from "@mui/icons-material/Home";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import { motion } from "framer-motion";
 
 export default function SideMenu() {
@@ -46,6 +47,15 @@ export default function SideMenu() {
             <Stack direction="row" spacing={1} alignItems={"center"}>
               <HomeIcon />
               <Typography variant="h7">Home</Typography>
+            </Stack>
+          </Button>
+        </Link>
+        <Divider />
+        <Link to="/ponuda">
+          <Button>
+            <Stack direction="row" spacing={1} alignItems={"center"}>
+              <LocalOfferIcon />
+              <Typography variant="h7">Ponuda</Typography>
             </Stack>
           </Button>
         </Link>
