@@ -9,6 +9,8 @@ import { Galerija } from "./components/Galerija.jsx";
 import { Kontakt } from "./components/Kontakt.jsx";
 import { RezervacijePage } from "./components/ReservacijePage.jsx";
 import { Ponuda } from "./components/Ponuda.jsx";
+import { DateContext, DateProvider } from "./contexts/DateContext.jsx";
+import { Home } from "./components/Home.jsx";
 
 const theme = createTheme({
   palette: {
@@ -49,8 +51,9 @@ const router = createHashRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
-      {/* <App /> */}
+      <DateProvider>
+        <RouterProvider router={router} />
+      </DateProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

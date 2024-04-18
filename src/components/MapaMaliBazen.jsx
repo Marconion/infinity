@@ -3,18 +3,20 @@ import { Stack, Typography } from "@mui/material";
 import "./MapaVelikiBazen.css";
 import { DateContext } from "../contexts/DateContext";
 import { LegendaKrevetLazybag } from "./LegendaKrevetLazybag";
-import { PriceContext } from "../contexts/PriceContext";
 
-export const MapaVelikiBazen2 = () => {
-  const krevetiLevo = new Array(10).fill(0);
-  const krevetiBazen = new Array(4).fill(0);
-  const krevetiDesno = new Array(10).fill(0);
-  const lazyBags = new Array(8).fill(0);
-  const krevetiBazenDole = new Array(2).fill(0);
-  const krevetiDole = new Array(3).fill(0);
+export const MapaMaliBazen = () => {
+  const krevetiLevo = new Array(4).fill(0);
+  const krevetiBazen = new Array(3).fill(0);
+  const krevetiDesno = new Array(4).fill(0);
+  //   const lazyBags = new Array(8).fill(0);
+  const krevetiBazenLevo = new Array(2).fill(0);
+  const krevetiBazenDesno = new Array(2).fill(0);
 
   const [selectedBeds, setSelectedBeds] = React.useState([]);
-  const { totalPrice, setTotalPrice } = useContext(PriceContext);
+  const [totalPrice, setTotalPrice] = React.useState(0);
+
+  const { calendarValue } = useContext(DateContext);
+  //   console.log(calendarValue);
 
   const bedPrice = 6000;
   const lazyBagPrice = 3000;
@@ -36,28 +38,37 @@ export const MapaVelikiBazen2 = () => {
       );
     }
   };
-  console.log(totalPrice);
 
   return (
     <>
       <LegendaKrevetLazybag />
 
-      <Stack direction={"row"} justifyContent={"space-between"}>
+      <Stack
+        direction={"row"}
+        justifyContent={"space-between"}
+        alignItems={"center"}>
         <Stack>
           {krevetiLevo.map((_, index) => {
             return (
               <div
                 key={index}
                 className={`krevet ${
-                  selectedBeds.includes(`normal-${index}`) ? "selected" : ""
+                  selectedBeds.includes(`kreveti-levo-${index}`)
+                    ? "selected"
+                    : ""
                 }`}
-                onClick={() => handleClick(index, "normal")}></div>
+                style={{ margin: 10 }}
+                onClick={() => handleClick(index, "kreveti-levo")}></div>
             );
           })}
         </Stack>
         <Stack direction={"column"}>
-          <Stack className="bazen">
-            <Stack mt={5} spacing={5}>
+          <Stack className="bazen-mali">
+            <Stack
+              direction={"row"}
+              mt={1}
+              spacing={2}
+              justifyContent={"center"}>
               {krevetiBazen.map((_, index) => {
                 return (
                   <div
@@ -69,6 +80,45 @@ export const MapaVelikiBazen2 = () => {
                 );
               })}
             </Stack>
+            <Stack direction={"row"} justifyContent={"space-between"} mt={2}>
+              <Stack
+                direction={"column"}
+                mt={1}
+                spacing={4}
+                justifyContent={"center"}>
+                {krevetiBazenLevo.map((_, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`krevet ${
+                        selectedBeds.includes(`water_levo-${index}`)
+                          ? "selected"
+                          : ""
+                      }`}
+                      onClick={() => handleClick(index, "water_levo")}></div>
+                  );
+                })}
+              </Stack>
+              <Stack
+                direction={"column"}
+                mt={1}
+                spacing={4}
+                justifyContent={"center"}>
+                {krevetiBazenDesno.map((_, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`krevet ${
+                        selectedBeds.includes(`water_desno-${index}`)
+                          ? "selected"
+                          : ""
+                      }`}
+                      onClick={() => handleClick(index, "water_desno")}></div>
+                  );
+                })}
+              </Stack>
+            </Stack>
+
             <Stack direction={"row"} justifyContent={"center"}>
               <Typography
                 variant="h6"
@@ -77,42 +127,12 @@ export const MapaVelikiBazen2 = () => {
                   fontSize: "12px",
                   textAlign: "center",
                 }}
-                mt={4}>
+                mt={2}>
                 Ukupna cena: <br />
                 {totalPrice} RSD
               </Typography>
             </Stack>
           </Stack>
-          <Stack
-            direction={"row"}
-            justifyContent={"space-between"}
-            mt={2}
-            mx={2}>
-            {krevetiBazenDole.map((_, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`krevet ${
-                    selectedBeds.includes(`krevet-bazen-dole-${index}`)
-                      ? "selected"
-                      : ""
-                  }`}
-                  onClick={() => handleClick(index, "krevet-bazen-dole")}></div>
-              );
-            })}
-          </Stack>
-        </Stack>
-        <Stack>
-          {lazyBags.map((_, index) => {
-            return (
-              <div
-                key={index}
-                className={`lazyBag ${
-                  selectedBeds.includes(`lazyBag-${index}`) ? "selected" : ""
-                }`}
-                onClick={() => handleClick(index, "lazyBag")}></div>
-            );
-          })}
         </Stack>
         <Stack>
           {krevetiDesno.map((_, index) => {
@@ -124,24 +144,13 @@ export const MapaVelikiBazen2 = () => {
                     ? "selected"
                     : ""
                 }`}
+                style={{ margin: 10 }}
                 onClick={() => handleClick(index, "krevet-desno")}></div>
             );
           })}
         </Stack>
       </Stack>
 
-      <Stack direction={"row"} justifyContent={"space-around"} mx={8} mb={12}>
-        {krevetiDole.map((_, index) => {
-          return (
-            <div
-              key={index}
-              className={`krevet ${
-                selectedBeds.includes(`krevet-dole-${index}`) ? "selected" : ""
-              }`}
-              onClick={() => handleClick(index, "krevet-dole")}></div>
-          );
-        })}
-      </Stack>
       {/* <Stack direction={"row"} justifyContent={"center"} mb={5}>
         <Typography variant="h6" sx={{ color: "secondary.main" }} mb={5}>
           Ukupna cena: {totalPrice} RSD

@@ -30,19 +30,13 @@ export const Kontakt = () => {
             spacing={2}
             py={4}
             sx={{ color: "white", textShadow: "1px 1px 8px #000000" }}>
-            <Typography
-              variant="h6"
-              style={{ textAlign: "center", fontSize: "15px" }}>
+            <Typography variant="h6" style={{ textAlign: "center" }}>
               Adresa: Izvorska 7a, Barajevo
             </Typography>
-            <Typography
-              variant="h6"
-              style={{ textAlign: "center", fontSize: "15px" }}>
+            <Typography variant="h6" style={{ textAlign: "center" }}>
               Telefon: 066 / 5333335
             </Typography>
-            <Typography
-              variant="h6"
-              style={{ textAlign: "center", fontSize: "15px" }}>
+            <Typography variant="h6" style={{ textAlign: "center" }}>
               Email: infinity@infinity.com
             </Typography>
           </Stack>
@@ -56,9 +50,9 @@ export const Kontakt = () => {
               alignItems: "center",
               margin: "auto",
             }}
-            allowfullscreen=""
+            allowFullScreen=""
             loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+            referrerPolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </motion.div>
       <Footer />

@@ -12,28 +12,26 @@ export default function ActionBarComponentProps() {
 
   const [selectedDate, setSelectedDate] = useState(dayjs(today));
 
-  const [calendarValue, setCalendarValue] = useState(dayjs(today));
-  useContext(DateContext).setCalendarValue = setCalendarValue;
+  const { setDate } = useContext(DateContext);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    setCalendarValue(date);
   };
-  console.log(selectedDate.$d.toLocaleDateString("sr-Latn-RS"));
+
+  setDate(selectedDate.$d.toLocaleDateString("sr-Latn-RS"));
+  // console.log(selectedDate.$d.toLocaleDateString("sr-Latn-RS"));
 
   return (
-    <DateContext.Provider value={{ calendarValue, setCalendarValue }}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <StaticDatePicker
-          defaultValue={dayjs(today)}
-          onChange={handleDateChange}
-          slotProps={{
-            actionBar: {
-              actions: ["today"],
-            },
-          }}
-        />
-      </LocalizationProvider>
-    </DateContext.Provider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <StaticDatePicker
+        defaultValue={dayjs(today)}
+        onChange={handleDateChange}
+        slotProps={{
+          actionBar: {
+            actions: ["today"],
+          },
+        }}
+      />
+    </LocalizationProvider>
   );
 }

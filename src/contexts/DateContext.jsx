@@ -1,28 +1,15 @@
-import React, { createContext, useState } from "react";
+import { createContext, useState } from "react";
 
-// Create the DateContext
-export const DateContext = createContext([null, () => {}]);
+export const DateContext = createContext();
 
-// // Create a DateProvider component
-// export const DateProvider = ({ children }) => {
-//     // State to hold the current date
-//     const [currentDate, setCurrentDate] = useState(new Date());
+export const DateProvider = ({ children }) => {
+  const [date, setDate] = useState("");
 
-//     // Function to update the current date
-//     const updateDate = () => {
-//         setCurrentDate(new Date());
-//     };
+  return (
+    <DateContext.Provider value={{ date, setDate }}>
+      {children}
+    </DateContext.Provider>
+  );
+};
 
-//     // Value object to be provided by the context
-//     const dateContextValue = {
-//         currentDate,
-//         updateDate,
-//     };
-
-//     // Render the DateProvider with the provided value
-//     return (
-//         <DateContext.Provider value={dateContextValue}>
-//             {children}
-//         </DateContext.Provider>
-//     );
-// };
+// export const DateContext = createContext("");

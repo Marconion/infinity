@@ -3,20 +3,24 @@ import { Stack, Typography, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { motion } from "framer-motion";
 import { DateContext } from "../contexts/DateContext";
+import { PriceContext } from "../contexts/PriceContext";
+import "./Placanje.css";
 
 export const Placanje = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [note, setNote] = useState("");
 
-  const { calendarValue } = useContext(DateContext);
-  console.log(calendarValue);
+  const { date } = useContext(DateContext);
+
+  console.log(date);
+
+  const { totalPrice } = useContext(PriceContext);
 
   // console.log(name, phone, note);
 
   return (
     <div>
-      {" "}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -32,9 +36,20 @@ export const Placanje = () => {
             Plaćanje
           </Typography>
 
-          <Stack direction="column" spacing={2} alignItems={"center"} pb={15}>
-            <Typography variant="h6" sx={{ color: "secondary.main" }}>
-              {calendarValue}
+          <Stack
+            direction="column"
+            spacing={2}
+            alignItems={"center"}
+            className="podaci">
+            <Typography
+              variant="h6"
+              sx={{ color: "secondary.main", fontSize: "18px" }}>
+              Datum: {date}
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{ color: "secondary.main", fontSize: "18px" }}>
+              Ukupna cena: {totalPrice} RSD
             </Typography>
           </Stack>
 

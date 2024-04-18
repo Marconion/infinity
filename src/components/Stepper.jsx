@@ -7,11 +7,11 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Rezervacije } from "./Rezervacije";
-import MapaVelikiBazen from "./MapaVelikiBazen";
 import { Placanje } from "./Placanje";
-import ActionBarComponentProps from "./Calendar";
+import { Bazeni } from "./Bazeni";
 import { DateContext } from "../contexts/DateContext";
-import { MapaVelikiBazen2 } from "./MapaVelikiBazen2";
+import { PriceContext } from "../contexts/PriceContext";
+import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 
 const steps = ["Datum", "Krevet ili lazybag", "Kontakt"];
 
@@ -23,9 +23,14 @@ export default function HorizontalLinearStepper() {
   const [phone, setPhone] = useState("");
   const [note, setNote] = useState("");
 
-  const { selectedDate } = useContext(DateContext);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  // console.log(name, phone, note);
+  // const [calendarValue, setCalendarValue] = useState(
+  //   new Date().toLocaleDateString("sr-Latn-rs")
+  // );
+
+  const [selectedItems, setSelectedItems] = useState([]);
+
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -47,6 +52,7 @@ export default function HorizontalLinearStepper() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setTotalPrice(0);
   };
 
   const handleSkip = () => {
@@ -69,83 +75,80 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-    <DateContext.Provider value={{ selectedDate }}>
-      <Box
-        sx={{
-          width: "91%",
-          display: "flex",
-          position: "relative",
-          flexDirection: "column",
-          p: 2,
-          justifyContent: "space-evenly",
-          // alignItems: "center",
-        }}>
-        <Stepper activeStep={activeStep} sx={{ mt: 0, pt: 0 }}>
-          {steps.map((label, index) => {
-            const stepProps = {};
-            const labelProps = {};
-            //   if (isStepOptional(index)) {
-            //     labelProps.optional = (
-            //       <Typography variant="caption">Optional</Typography>
-            //     );
-            //   }
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>
-                  <Typography fontSize={"11px"}>{label}</Typography>
-                </StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
+    <PriceContext.Provider value={{ totalPrice, setTotalPrice }}>
+      <SelectedItemsContext.Provider
+        value={{ selectedItems, setSelectedItems }}>
+        <Box
+          sx={{
+            width: "91%",
+            display: "flex",
+            position: "relative",
+            flexDirection: "column",
+            p: 2,
+            justifyContent: "space-evenly",
+          }}>
+          <Stepper activeStep={activeStep} sx={{ mt: 0, pt: 0 }}>
+            {steps.map((label, index) => {
+              const stepProps = {};
+              const labelProps = {};
 
-        {activeStep === steps.length ? (
-          <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              Rezervisali ste. Hvala na poverenju !
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleReset}>Reset</Button>
-            </Box>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                pt: 2,
-              }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}>
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
-              {/* {isStepOptional(activeStep) && (
+              if (isStepSkipped(index)) {
+                stepProps.completed = false;
+              }
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>
+                    <Typography fontSize={"11px"}>{label}</Typography>
+                  </StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+
+          {activeStep === steps.length ? (
+            <React.Fragment>
+              <Typography sx={{ mt: 2, mb: 1 }}>
+                Rezervisali ste. Hvala na poverenju !
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Button onClick={handleReset}>Reset</Button>
+              </Box>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  pt: 2,
+                }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}>
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                {/* {isStepOptional(activeStep) && (
                 <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
                 </Button>
             )} */}
 
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-
-                {/* Store name, phone and note on next */}
-              </Button>
-            </Box>
-            {activeStep === 0 ? <Rezervacije /> : null}
-            {activeStep === 1 ? <MapaVelikiBazen2 /> : null}
-            {activeStep === 2 ? <Placanje /> : null}
-          </React.Fragment>
-        )}
-      </Box>
-    </DateContext.Provider>
+                <Button onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                  {/* Store name, phone and note on next */}
+                </Button>
+              </Box>
+              {activeStep === 0 ? <Rezervacije /> : null}
+              {activeStep === 1 ? <Bazeni /> : null}
+              {activeStep === 2 ? <Placanje /> : null}
+            </React.Fragment>
+          )}
+        </Box>
+      </SelectedItemsContext.Provider>
+    </PriceContext.Provider>
   );
 }
