@@ -11,6 +11,7 @@ import { RezervacijePage } from "./components/ReservacijePage.jsx";
 import { Ponuda } from "./components/Ponuda.jsx";
 import { DateContext, DateProvider } from "./contexts/DateContext.jsx";
 import { Home } from "./components/Home.jsx";
+import { SelectedItemsContextProvider } from "./contexts/SelectedItemsContext.jsx";
 
 const theme = createTheme({
   palette: {
@@ -52,7 +53,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <DateProvider>
-        <RouterProvider router={router} />
+        <SelectedItemsContextProvider>
+          <RouterProvider router={router} />
+        </SelectedItemsContextProvider>
       </DateProvider>
     </ThemeProvider>
   </React.StrictMode>

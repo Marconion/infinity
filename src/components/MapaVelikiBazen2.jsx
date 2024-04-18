@@ -4,8 +4,12 @@ import "./MapaVelikiBazen.css";
 import { DateContext } from "../contexts/DateContext";
 import { LegendaKrevetLazybag } from "./LegendaKrevetLazybag";
 import { PriceContext } from "../contexts/PriceContext";
+import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 
 export const MapaVelikiBazen2 = () => {
+  {
+    /* KREVETI I LAZYBAGS */
+  }
   const krevetiLevo = new Array(10).fill(0);
   const krevetiBazen = new Array(4).fill(0);
   const krevetiDesno = new Array(10).fill(0);
@@ -15,9 +19,19 @@ export const MapaVelikiBazen2 = () => {
 
   const [selectedBeds, setSelectedBeds] = React.useState([]);
   const { totalPrice, setTotalPrice } = useContext(PriceContext);
+  const { setSelected } = useContext(SelectedItemsContext);
 
-  const bedPrice = 6000;
-  const lazyBagPrice = 3000;
+  {
+    /* CHECK WEEKEND */
+  }
+  const { date } = useContext(DateContext);
+  const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+
+  {
+    /* CENE */
+  }
+  const bedPrice = isWeekend ? 6000 : 5000;
+  const lazyBagPrice = isWeekend ? 3000 : 2500;
 
   const handleClick = (index, type) => {
     const itemId = `${type}-${index}`;
@@ -36,7 +50,8 @@ export const MapaVelikiBazen2 = () => {
       );
     }
   };
-  console.log(totalPrice);
+  console.log(selectedBeds);
+  setSelected(selectedBeds);
 
   return (
     <>
@@ -49,9 +64,11 @@ export const MapaVelikiBazen2 = () => {
               <div
                 key={index}
                 className={`krevet ${
-                  selectedBeds.includes(`normal-${index}`) ? "selected" : ""
+                  selectedBeds.includes(`KL-${index}`) ? "selected" : ""
                 }`}
-                onClick={() => handleClick(index, "normal")}></div>
+                onClick={() => handleClick(index, "KL")}>
+                KL-{index}
+              </div>
             );
           })}
         </Stack>
@@ -63,9 +80,11 @@ export const MapaVelikiBazen2 = () => {
                   <div
                     key={index}
                     className={`krevet ${
-                      selectedBeds.includes(`water-${index}`) ? "selected" : ""
+                      selectedBeds.includes(`KV-${index}`) ? "selected" : ""
                     }`}
-                    onClick={() => handleClick(index, "water")}></div>
+                    onClick={() => handleClick(index, "KV")}>
+                    KV-{index}
+                  </div>
                 );
               })}
             </Stack>
@@ -93,11 +112,11 @@ export const MapaVelikiBazen2 = () => {
                 <div
                   key={index}
                   className={`krevet ${
-                    selectedBeds.includes(`krevet-bazen-dole-${index}`)
-                      ? "selected"
-                      : ""
+                    selectedBeds.includes(`KBD-${index}`) ? "selected" : ""
                   }`}
-                  onClick={() => handleClick(index, "krevet-bazen-dole")}></div>
+                  onClick={() => handleClick(index, "KBD")}>
+                  KBD-{index}
+                </div>
               );
             })}
           </Stack>
@@ -110,7 +129,9 @@ export const MapaVelikiBazen2 = () => {
                 className={`lazyBag ${
                   selectedBeds.includes(`lazyBag-${index}`) ? "selected" : ""
                 }`}
-                onClick={() => handleClick(index, "lazyBag")}></div>
+                onClick={() => handleClick(index, "lazyBag")}>
+                LB-{index}
+              </div>
             );
           })}
         </Stack>
@@ -120,11 +141,11 @@ export const MapaVelikiBazen2 = () => {
               <div
                 key={index}
                 className={`krevet ${
-                  selectedBeds.includes(`krevet-desno-${index}`)
-                    ? "selected"
-                    : ""
+                  selectedBeds.includes(`KD-${index}`) ? "selected" : ""
                 }`}
-                onClick={() => handleClick(index, "krevet-desno")}></div>
+                onClick={() => handleClick(index, "KD")}>
+                KD-{index}
+              </div>
             );
           })}
         </Stack>
@@ -136,9 +157,11 @@ export const MapaVelikiBazen2 = () => {
             <div
               key={index}
               className={`krevet ${
-                selectedBeds.includes(`krevet-dole-${index}`) ? "selected" : ""
+                selectedBeds.includes(`K-${index}`) ? "selected" : ""
               }`}
-              onClick={() => handleClick(index, "krevet-dole")}></div>
+              onClick={() => handleClick(index, "K")}>
+              K-{index}
+            </div>
           );
         })}
       </Stack>

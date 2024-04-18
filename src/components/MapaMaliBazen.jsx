@@ -3,6 +3,7 @@ import { Stack, Typography } from "@mui/material";
 import "./MapaVelikiBazen.css";
 import { DateContext } from "../contexts/DateContext";
 import { LegendaKrevetLazybag } from "./LegendaKrevetLazybag";
+import { PriceContext } from "../contexts/PriceContext";
 
 export const MapaMaliBazen = () => {
   const krevetiLevo = new Array(4).fill(0);
@@ -13,7 +14,7 @@ export const MapaMaliBazen = () => {
   const krevetiBazenDesno = new Array(2).fill(0);
 
   const [selectedBeds, setSelectedBeds] = React.useState([]);
-  const [totalPrice, setTotalPrice] = React.useState(0);
+  const { totalPrice, setTotalPrice } = useContext(PriceContext);
 
   const { calendarValue } = useContext(DateContext);
   //   console.log(calendarValue);

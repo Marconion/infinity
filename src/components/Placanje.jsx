@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { DateContext } from "../contexts/DateContext";
 import { PriceContext } from "../contexts/PriceContext";
 import "./Placanje.css";
+import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 
 export const Placanje = () => {
   const [name, setName] = useState("");
@@ -12,8 +13,9 @@ export const Placanje = () => {
   const [note, setNote] = useState("");
 
   const { date } = useContext(DateContext);
+  const { selected, setSelected } = useContext(SelectedItemsContext);
 
-  console.log(date);
+  console.log(date.toLocaleDateString("sr-Latn-RS"));
 
   const { totalPrice } = useContext(PriceContext);
 
@@ -31,7 +33,7 @@ export const Placanje = () => {
           spacing={2}
           alignItems={"center"}
           py={2}
-          mb={0}>
+          mb={10}>
           <Typography variant="h5" sx={{ color: "secondary.main" }}>
             Plaćanje
           </Typography>
@@ -44,12 +46,17 @@ export const Placanje = () => {
             <Typography
               variant="h6"
               sx={{ color: "secondary.main", fontSize: "18px" }}>
-              Datum: {date}
+              Datum: {date.toLocaleDateString("sr-Latn-RS")}
             </Typography>
             <Typography
               variant="h6"
               sx={{ color: "secondary.main", fontSize: "18px" }}>
               Ukupna cena: {totalPrice} RSD
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{ color: "secondary.main", fontSize: "18px" }}>
+              Mesto: {selected} RSD
             </Typography>
           </Stack>
 
@@ -89,6 +96,7 @@ export const Placanje = () => {
                 defaultValue=""
                 // helperText="Napomena"
                 variant="filled"
+                sx={{ zIndex: -2 }}
                 onChange={(e) => setNote(e.target.value)}
               />
             </Stack>
