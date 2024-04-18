@@ -4,6 +4,7 @@ import "./MapaVelikiBazen.css";
 import { DateContext } from "../contexts/DateContext";
 import { LegendaKrevetLazybag } from "./LegendaKrevetLazybag";
 import { PriceContext } from "../contexts/PriceContext";
+import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 
 export const MapaMaliBazen = () => {
   const krevetiLevo = new Array(4).fill(0);
@@ -14,30 +15,42 @@ export const MapaMaliBazen = () => {
   const krevetiBazenDesno = new Array(2).fill(0);
 
   const [selectedBeds, setSelectedBeds] = React.useState([]);
-  const { totalPrice, setTotalPrice } = useContext(PriceContext);
+  const { price, setPrice } = useContext(PriceContext);
+  const { selected, setSelected } = useContext(SelectedItemsContext);
 
   const { calendarValue } = useContext(DateContext);
   //   console.log(calendarValue);
 
-  const bedPrice = 6000;
-  const lazyBagPrice = 3000;
+  {
+    /* CHECK WEEKEND */
+  }
+  const { date } = useContext(DateContext);
+  const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+
+  {
+    /* CENE */
+  }
+  const bedPrice = isWeekend ? 6000 : 5000;
+  // const lazyBagPrice = isWeekend ? 3000 : 2500;
+
+  // const bedPrice = 6000;
+  // const lazyBagPrice = 3000;
 
   const handleClick = (index, type) => {
     const itemId = `${type}-${index}`;
 
     if (selectedBeds.includes(itemId)) {
       setSelectedBeds(selectedBeds.filter((item) => item !== itemId));
-      setTotalPrice(
-        (prevPrice) =>
-          prevPrice - (type === "lazyBag" ? lazyBagPrice : bedPrice)
+      setPrice(
+        (prevPrice) => prevPrice - (type === "LB" ? lazyBagPrice : bedPrice)
       );
     } else {
       setSelectedBeds([...selectedBeds, itemId]);
-      setTotalPrice(
-        (prevPrice) =>
-          prevPrice + (type === "lazyBag" ? lazyBagPrice : bedPrice)
+      setPrice(
+        (prevPrice) => prevPrice + (type === "LB" ? lazyBagPrice : bedPrice)
       );
     }
+    setSelected((prevSelected) => [...prevSelected, itemId]);
   };
 
   return (
@@ -54,12 +67,12 @@ export const MapaMaliBazen = () => {
               <div
                 key={index}
                 className={`krevet ${
-                  selectedBeds.includes(`kreveti-levo-${index}`)
-                    ? "selected"
-                    : ""
+                  selectedBeds.includes(`ML-${index}`) ? "selected" : ""
                 }`}
                 style={{ margin: 10 }}
-                onClick={() => handleClick(index, "kreveti-levo")}></div>
+                onClick={() => handleClick(index, "ML")}>
+                ML-{index}
+              </div>
             );
           })}
         </Stack>
@@ -75,9 +88,11 @@ export const MapaMaliBazen = () => {
                   <div
                     key={index}
                     className={`krevet ${
-                      selectedBeds.includes(`water-${index}`) ? "selected" : ""
+                      selectedBeds.includes(`MVT-${index}`) ? "selected" : ""
                     }`}
-                    onClick={() => handleClick(index, "water")}></div>
+                    onClick={() => handleClick(index, "MVT")}>
+                    MVT-{index}
+                  </div>
                 );
               })}
             </Stack>
@@ -92,11 +107,11 @@ export const MapaMaliBazen = () => {
                     <div
                       key={index}
                       className={`krevet ${
-                        selectedBeds.includes(`water_levo-${index}`)
-                          ? "selected"
-                          : ""
+                        selectedBeds.includes(`MVL-${index}`) ? "selected" : ""
                       }`}
-                      onClick={() => handleClick(index, "water_levo")}></div>
+                      onClick={() => handleClick(index, "MVL")}>
+                      MVL-{index}
+                    </div>
                   );
                 })}
               </Stack>
@@ -110,11 +125,11 @@ export const MapaMaliBazen = () => {
                     <div
                       key={index}
                       className={`krevet ${
-                        selectedBeds.includes(`water_desno-${index}`)
-                          ? "selected"
-                          : ""
+                        selectedBeds.includes(`MVD-${index}`) ? "selected" : ""
                       }`}
-                      onClick={() => handleClick(index, "water_desno")}></div>
+                      onClick={() => handleClick(index, "MVD")}>
+                      MVD-{index}
+                    </div>
                   );
                 })}
               </Stack>
@@ -130,7 +145,7 @@ export const MapaMaliBazen = () => {
                 }}
                 mt={2}>
                 Ukupna cena: <br />
-                {totalPrice} RSD
+                {price} RSD
               </Typography>
             </Stack>
           </Stack>
@@ -141,12 +156,12 @@ export const MapaMaliBazen = () => {
               <div
                 key={index}
                 className={`krevet ${
-                  selectedBeds.includes(`krevet-desno-${index}`)
-                    ? "selected"
-                    : ""
+                  selectedBeds.includes(`MD-${index}`) ? "selected" : ""
                 }`}
                 style={{ margin: 10 }}
-                onClick={() => handleClick(index, "krevet-desno")}></div>
+                onClick={() => handleClick(index, "MD")}>
+                MD-{index}
+              </div>
             );
           })}
         </Stack>

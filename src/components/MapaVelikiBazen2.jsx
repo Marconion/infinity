@@ -1,25 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 import "./MapaVelikiBazen.css";
 import { DateContext } from "../contexts/DateContext";
 import { LegendaKrevetLazybag } from "./LegendaKrevetLazybag";
 import { PriceContext } from "../contexts/PriceContext";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
+import { TotalPersonsContext } from "../contexts/TotalPersonsContext";
 
 export const MapaVelikiBazen2 = () => {
+  const types = ["VL", "VV", "VBD", "VD", "V", "LB"];
   {
     /* KREVETI I LAZYBAGS */
   }
-  const krevetiLevo = new Array(10).fill(0);
+  const krevetiLevo = new Array(8).fill(0);
   const krevetiBazen = new Array(4).fill(0);
-  const krevetiDesno = new Array(10).fill(0);
+  const krevetiDesno = new Array(8).fill(0);
   const lazyBags = new Array(8).fill(0);
   const krevetiBazenDole = new Array(2).fill(0);
-  const krevetiDole = new Array(3).fill(0);
+  const krevetiDole = new Array(5).fill(0);
 
-  const [selectedBeds, setSelectedBeds] = React.useState([]);
-  const { totalPrice, setTotalPrice } = useContext(PriceContext);
+  const [selectedBeds, setSelectedBeds] = useState([]);
+  const { price, setPrice } = useContext(PriceContext);
   const { setSelected } = useContext(SelectedItemsContext);
+  const [lbPersons, setLbPersons] = useState(0);
+  const [bedPersons, setBedPersons] = useState(0);
+  const { totalPersons, setTotalPersons } = useContext(TotalPersonsContext);
 
   {
     /* CHECK WEEKEND */
@@ -33,25 +38,49 @@ export const MapaVelikiBazen2 = () => {
   const bedPrice = isWeekend ? 6000 : 5000;
   const lazyBagPrice = isWeekend ? 3000 : 2500;
 
+  const isBedType = (type) => ["VL", "VV", "VBD", "VD", "V"].includes(type);
+
   const handleClick = (index, type) => {
     const itemId = `${type}-${index}`;
 
     if (selectedBeds.includes(itemId)) {
       setSelectedBeds(selectedBeds.filter((item) => item !== itemId));
-      setTotalPrice(
-        (prevPrice) =>
-          prevPrice - (type === "lazyBag" ? lazyBagPrice : bedPrice)
+      setPrice(
+        (prevPrice) => prevPrice - (type === "LB" ? lazyBagPrice : bedPrice)
+      );
+      setLbPersons(
+        type === "LB" ? (prevPersons) => prevPersons - 1 : lbPersons
+      );
+      setBedPersons(
+        isBedType(type) ? (prevPersons) => prevPersons - 2 : bedPersons
+      );
+
+      // Remove item from selected state
+      setSelected((prevSelected) =>
+        prevSelected.filter((item) => item !== itemId)
       );
     } else {
       setSelectedBeds([...selectedBeds, itemId]);
-      setTotalPrice(
-        (prevPrice) =>
-          prevPrice + (type === "lazyBag" ? lazyBagPrice : bedPrice)
+      setPrice(
+        (prevPrice) => prevPrice + (type === "LB" ? lazyBagPrice : bedPrice)
       );
+      setLbPersons(
+        type === "LB" ? (prevPersons) => prevPersons + 1 : lbPersons
+      );
+      setBedPersons(
+        isBedType(type) ? (prevPersons) => prevPersons + 2 : bedPersons
+      );
+
+      // Add item to selected state
+      setSelected((prevSelected) => [...prevSelected, itemId]);
     }
   };
-  console.log(selectedBeds);
-  setSelected(selectedBeds);
+
+  useEffect(() => {
+    setTotalPersons(lbPersons + bedPersons);
+  }, [lbPersons, bedPersons]);
+
+  // console.log(selectedBeds);
 
   return (
     <>
@@ -64,26 +93,26 @@ export const MapaVelikiBazen2 = () => {
               <div
                 key={index}
                 className={`krevet ${
-                  selectedBeds.includes(`KL-${index}`) ? "selected" : ""
+                  selectedBeds.includes(`VL-${index}`) ? "selected" : ""
                 }`}
-                onClick={() => handleClick(index, "KL")}>
-                KL-{index}
+                onClick={() => handleClick(index, "VL")}>
+                VL-{index}
               </div>
             );
           })}
         </Stack>
         <Stack direction={"column"}>
           <Stack className="bazen">
-            <Stack mt={5} spacing={5}>
+            <Stack mt={3} spacing={5}>
               {krevetiBazen.map((_, index) => {
                 return (
                   <div
                     key={index}
                     className={`krevet ${
-                      selectedBeds.includes(`KV-${index}`) ? "selected" : ""
+                      selectedBeds.includes(`VV-${index}`) ? "selected" : ""
                     }`}
-                    onClick={() => handleClick(index, "KV")}>
-                    KV-{index}
+                    onClick={() => handleClick(index, "VV")}>
+                    VV-{index}
                   </div>
                 );
               })}
@@ -98,7 +127,16 @@ export const MapaVelikiBazen2 = () => {
                 }}
                 mt={4}>
                 Ukupna cena: <br />
-                {totalPrice} RSD
+                {price} RSD <br />
+                {selectedBeds.length + lazyBags.length > 0
+                  ? totalPersons +
+                    (totalPersons === 2 ||
+                    totalPersons === 3 ||
+                    totalPersons === 4
+                      ? " osobe"
+                      : " osoba")
+                  : "none"}
+                <br />
               </Typography>
             </Stack>
           </Stack>
@@ -112,10 +150,10 @@ export const MapaVelikiBazen2 = () => {
                 <div
                   key={index}
                   className={`krevet ${
-                    selectedBeds.includes(`KBD-${index}`) ? "selected" : ""
+                    selectedBeds.includes(`VBD-${index}`) ? "selected" : ""
                   }`}
-                  onClick={() => handleClick(index, "KBD")}>
-                  KBD-{index}
+                  onClick={() => handleClick(index, "VBD")}>
+                  VBD-{index}
                 </div>
               );
             })}
@@ -127,9 +165,9 @@ export const MapaVelikiBazen2 = () => {
               <div
                 key={index}
                 className={`lazyBag ${
-                  selectedBeds.includes(`lazyBag-${index}`) ? "selected" : ""
+                  selectedBeds.includes(`LB-${index}`) ? "selected" : ""
                 }`}
-                onClick={() => handleClick(index, "lazyBag")}>
+                onClick={() => handleClick(index, "LB")}>
                 LB-{index}
               </div>
             );
@@ -141,35 +179,30 @@ export const MapaVelikiBazen2 = () => {
               <div
                 key={index}
                 className={`krevet ${
-                  selectedBeds.includes(`KD-${index}`) ? "selected" : ""
+                  selectedBeds.includes(`VD-${index}`) ? "selected" : ""
                 }`}
-                onClick={() => handleClick(index, "KD")}>
-                KD-{index}
+                onClick={() => handleClick(index, "VD")}>
+                VD-{index}
               </div>
             );
           })}
         </Stack>
       </Stack>
 
-      <Stack direction={"row"} justifyContent={"space-around"} mx={8} mb={12}>
+      <Stack direction={"row"} justifyContent={"space-around"} mx={0} mb={12}>
         {krevetiDole.map((_, index) => {
           return (
             <div
               key={index}
               className={`krevet ${
-                selectedBeds.includes(`K-${index}`) ? "selected" : ""
+                selectedBeds.includes(`V-${index}`) ? "selected" : ""
               }`}
-              onClick={() => handleClick(index, "K")}>
-              K-{index}
+              onClick={() => handleClick(index, "V")}>
+              V-{index}
             </div>
           );
         })}
       </Stack>
-      {/* <Stack direction={"row"} justifyContent={"center"} mb={5}>
-        <Typography variant="h6" sx={{ color: "secondary.main" }} mb={5}>
-          Ukupna cena: {totalPrice} RSD
-        </Typography>
-      </Stack> */}
     </>
   );
 };

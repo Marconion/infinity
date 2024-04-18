@@ -1,5 +1,5 @@
 import "../App.css";
-import React from "react";
+import React, { useContext } from "react";
 import { Stack, Typography, Button } from "@mui/material";
 import naslovnaSlika from "../assets/images/Infinity-1.jpg";
 import misli from "../assets/misli";
@@ -8,11 +8,22 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Opis } from "../components/Opis";
 import { Footer } from "./Footer";
+import { PriceContext } from "../contexts/PriceContext";
+import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 
 export const Home = () => {
   const matches = useMediaQuery("(max-width:768px)");
 
   const randomIndex = Math.floor(Math.random() * misli.length);
+
+  const { setPrice } = useContext(PriceContext);
+  const { setSelected } = useContext(SelectedItemsContext);
+
+  function handleClick() {
+    setPrice(0);
+    setSelected([]);
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -40,7 +51,9 @@ export const Home = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 2, ease: "easeOut" }}>
               <Link to="/rezervacije">
-                <Button variant="outlined">Rezerviši</Button>
+                <Button variant="outlined" onClick={handleClick}>
+                  Rezerviši
+                </Button>
               </Link>
             </motion.div>
           </Typography>

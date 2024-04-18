@@ -1,11 +1,12 @@
 import { React, useState, useContext, useEffect } from "react";
-import { Stack, Typography, Box } from "@mui/material";
+import { Stack, Typography, Divider } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { motion } from "framer-motion";
 import { DateContext } from "../contexts/DateContext";
 import { PriceContext } from "../contexts/PriceContext";
 import "./Placanje.css";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
+import { TotalPersonsContext } from "../contexts/TotalPersonsContext";
 
 export const Placanje = () => {
   const [name, setName] = useState("");
@@ -13,11 +14,13 @@ export const Placanje = () => {
   const [note, setNote] = useState("");
 
   const { date } = useContext(DateContext);
-  const { selected, setSelected } = useContext(SelectedItemsContext);
+  const { selected } = useContext(SelectedItemsContext);
+  const { totalPersons } = useContext(TotalPersonsContext);
 
   console.log(date.toLocaleDateString("sr-Latn-RS"));
+  console.log(selected);
 
-  const { totalPrice } = useContext(PriceContext);
+  const { price } = useContext(PriceContext);
 
   // console.log(name, phone, note);
 
@@ -39,25 +42,66 @@ export const Placanje = () => {
           </Typography>
 
           <Stack
-            direction="column"
+            direction="row"
             spacing={2}
             alignItems={"center"}
+            textAlign={"center"}
             className="podaci">
-            <Typography
-              variant="h6"
-              sx={{ color: "secondary.main", fontSize: "18px" }}>
-              Datum: {date.toLocaleDateString("sr-Latn-RS")}
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ color: "secondary.main", fontSize: "18px" }}>
-              Ukupna cena: {totalPrice} RSD
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ color: "secondary.main", fontSize: "18px" }}>
-              Mesto: {selected} RSD
-            </Typography>
+            <Stack direction="column" spacing={2}>
+              <Typography variant="body2" sx={{ color: "secondary.main" }}>
+                Datum:
+                <Typography variant="body2" sx={{ color: "secondary.main" }}>
+                  {date.toLocaleDateString("sr-Latn-RS")}
+                </Typography>
+              </Typography>
+              <Divider
+                variant="middle"
+                sx={{ color: "black", width: "100%" }}
+              />
+              <Typography variant="body2" sx={{ color: "secondary.main" }}>
+                Ukupna cena:
+                <Typography variant="body2" sx={{ color: "secondary.main" }}>
+                  {price} RSD
+                </Typography>
+              </Typography>
+            </Stack>
+            <Divider
+              variant="middle"
+              orientation="vertical"
+              sx={{ color: "black", height: "120px" }}
+            />
+            <Stack direction="column" spacing={2}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "secondary.main",
+                  textAlign: "center",
+                  // textTransform: "uppercase",
+                }}>
+                Odabrali ste
+              </Typography>
+              <Stack direction={"column"} alignItems={"center"}>
+                {selected.map((item) => {
+                  return (
+                    <>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "secondary.main" }}>
+                        {item}
+                      </Typography>
+                    </>
+                  );
+                })}
+                <Typography variant="body2" sx={{ color: "secondary.main" }}>
+                  {totalPersons}{" "}
+                  {totalPersons === 2 ||
+                  totalPersons === 3 ||
+                  totalPersons === 4
+                    ? " osobe"
+                    : " osoba"}
+                </Typography>
+              </Stack>
+            </Stack>
           </Stack>
 
           {/* FORM */}
@@ -96,7 +140,6 @@ export const Placanje = () => {
                 defaultValue=""
                 // helperText="Napomena"
                 variant="filled"
-                sx={{ zIndex: -2 }}
                 onChange={(e) => setNote(e.target.value)}
               />
             </Stack>

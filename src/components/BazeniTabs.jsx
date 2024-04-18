@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { MapaVelikiBazen2 } from "./MapaVelikiBazen2";
 import { MapaMaliBazen } from "./MapaMaliBazen";
+import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
+import { PriceContext } from "../contexts/PriceContext";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,8 +44,13 @@ function a11yProps(index) {
 function BazeniTabs() {
   const [value, setValue] = React.useState(0);
 
+  const { setSelected } = React.useContext(SelectedItemsContext);
+  const { setPrice } = React.useContext(PriceContext);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setSelected("");
+    setPrice(0);
   };
 
   return (

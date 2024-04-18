@@ -12,6 +12,8 @@ import { Ponuda } from "./components/Ponuda.jsx";
 import { DateContext, DateProvider } from "./contexts/DateContext.jsx";
 import { Home } from "./components/Home.jsx";
 import { SelectedItemsContextProvider } from "./contexts/SelectedItemsContext.jsx";
+import { PriceProvider } from "./contexts/PriceContext.jsx";
+import { TotalPersonsProvider } from "./contexts/TotalPersonsContext.jsx";
 
 const theme = createTheme({
   palette: {
@@ -53,9 +55,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <DateProvider>
-        <SelectedItemsContextProvider>
-          <RouterProvider router={router} />
-        </SelectedItemsContextProvider>
+        <PriceProvider>
+          <SelectedItemsContextProvider>
+            <TotalPersonsProvider>
+              <RouterProvider router={router} />
+            </TotalPersonsProvider>
+          </SelectedItemsContextProvider>
+        </PriceProvider>
       </DateProvider>
     </ThemeProvider>
   </React.StrictMode>

@@ -9,45 +9,22 @@ export const Footer = () => {
   return (
     <>
       <Stack
-        spacing={2}
+        spacing={0.5}
         sx={{
           position: "fixed",
-          py: 2,
+          py: 1,
           bottom: 0,
           backgroundColor: "primary.main",
           color: "white",
           width: "100%",
+          zIndex: 1000,
         }}>
         <Stack direction="row" justifyContent="center">
           <SocialLinks />
         </Stack>
-        <Typography variant="body2" align="center">
+        <Typography variant="body2" align="center" fontSize={"11px"}>
           Infinity Pool House © {date} All rights reserved
         </Typography>
-        {/* <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            position: "absolute",
-            bottom: -250,
-            right: -280,
-            transform: "rotate(0deg) scale(0.5)",
-            zIndex: -1,
-          }}>
-          <img src={vector2} alt="vector2" />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            position: "absolute",
-            bottom: -200,
-            left: -185,
-            transform: "rotate(240deg) scale(0.5)",
-            zIndex: -2,
-          }}>
-          <img src={vector3} alt="vector2" />
-        </Box> */}
       </Stack>
     </>
   );
