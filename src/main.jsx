@@ -14,6 +14,7 @@ import { Home } from "./components/Home.jsx";
 import { SelectedItemsContextProvider } from "./contexts/SelectedItemsContext.jsx";
 import { PriceProvider } from "./contexts/PriceContext.jsx";
 import { TotalPersonsProvider } from "./contexts/TotalPersonsContext.jsx";
+import { FormInputProvider } from "./contexts/FormInputContext.jsx";
 
 const theme = createTheme({
   palette: {
@@ -58,7 +59,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <PriceProvider>
           <SelectedItemsContextProvider>
             <TotalPersonsProvider>
-              <RouterProvider router={router} />
+              <FormInputProvider>
+                <RouterProvider router={router} />
+              </FormInputProvider>
             </TotalPersonsProvider>
           </SelectedItemsContextProvider>
         </PriceProvider>

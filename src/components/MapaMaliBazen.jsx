@@ -1,12 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 import "./MapaVelikiBazen.css";
 import { DateContext } from "../contexts/DateContext";
 import { LegendaKrevetLazybag } from "./LegendaKrevetLazybag";
 import { PriceContext } from "../contexts/PriceContext";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
+import { TotalPersonsContext } from "../contexts/TotalPersonsContext";
 
 export const MapaMaliBazen = () => {
+  {
+    /* ARRAYS */
+  }
   const krevetiLevo = new Array(4).fill(0);
   const krevetiBazen = new Array(3).fill(0);
   const krevetiDesno = new Array(4).fill(0);
@@ -14,12 +18,19 @@ export const MapaMaliBazen = () => {
   const krevetiBazenLevo = new Array(2).fill(0);
   const krevetiBazenDesno = new Array(2).fill(0);
 
-  const [selectedBeds, setSelectedBeds] = React.useState([]);
-  const { price, setPrice } = useContext(PriceContext);
-  const { selected, setSelected } = useContext(SelectedItemsContext);
+  {
+    /* STATES */
+  }
+  const [selectedBeds, setSelectedBeds] = useState([]);
+  const [bedPersons, setBedPersons] = useState(0);
 
-  const { calendarValue } = useContext(DateContext);
-  //   console.log(calendarValue);
+  {
+    /* CONTEXTS */
+  }
+  const { price, setPrice } = useContext(PriceContext);
+  const { totalPersons, setTotalPersons } = useContext(TotalPersonsContext);
+
+  const { selected, setSelected } = useContext(SelectedItemsContext);
 
   {
     /* CHECK WEEKEND */
@@ -31,10 +42,11 @@ export const MapaMaliBazen = () => {
     /* CENE */
   }
   const bedPrice = isWeekend ? 6000 : 5000;
-  // const lazyBagPrice = isWeekend ? 3000 : 2500;
 
-  // const bedPrice = 6000;
-  // const lazyBagPrice = 3000;
+  {
+    /* TYPES */
+  }
+  const isBedType = (type) => ["ML", "MVT", "MVL", "MVD", "MD"].includes(type);
 
   const handleClick = (index, type) => {
     const itemId = `${type}-${index}`;
@@ -44,14 +56,29 @@ export const MapaMaliBazen = () => {
       setPrice(
         (prevPrice) => prevPrice - (type === "LB" ? lazyBagPrice : bedPrice)
       );
+      setBedPersons(
+        isBedType(type) ? (prevPersons) => prevPersons - 2 : bedPersons
+      );
+
+      // Remove item from selected state
+      setSelected((prevSelected) =>
+        prevSelected.filter((item) => item !== itemId)
+      );
     } else {
       setSelectedBeds([...selectedBeds, itemId]);
       setPrice(
         (prevPrice) => prevPrice + (type === "LB" ? lazyBagPrice : bedPrice)
       );
+      setBedPersons(
+        isBedType(type) ? (prevPersons) => prevPersons + 2 : bedPersons
+      );
+      setSelected((prevSelected) => [...prevSelected, itemId]);
     }
-    setSelected((prevSelected) => [...prevSelected, itemId]);
   };
+
+  useEffect(() => {
+    setTotalPersons(bedPersons);
+  }, [bedPersons]);
 
   return (
     <>
@@ -145,7 +172,16 @@ export const MapaMaliBazen = () => {
                 }}
                 mt={2}>
                 Ukupna cena: <br />
-                {price} RSD
+                {price} RSD <br />(
+                {selectedBeds.length > 0
+                  ? totalPersons +
+                    (totalPersons === 2 ||
+                    totalPersons === 3 ||
+                    totalPersons === 4
+                      ? " osobe"
+                      : " osoba")
+                  : "0 osoba"}
+                )
               </Typography>
             </Stack>
           </Stack>

@@ -7,7 +7,7 @@ export const LegendaKrevetLazybag = () => {
       direction={"row"}
       justifyContent={"center"}
       alignitems={"center"}
-      mb={1}>
+      my={1}>
       <Stack direction={"row"}>
         <Typography
           variant="h6"
@@ -17,7 +17,7 @@ export const LegendaKrevetLazybag = () => {
           display={"flex"}
           alignItems={"center"}
           mx={1}>
-          Krevet
+          Krevet (2 osobe)
         </Typography>
         <div
           className="krevet"
@@ -36,7 +36,7 @@ export const LegendaKrevetLazybag = () => {
           display={"flex"}
           alignItems={"center"}
           mx={1}>
-          Lazy bag
+          Lazy bag (1 osoba)
         </Typography>
         <div
           className="lazyBag"

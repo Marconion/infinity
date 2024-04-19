@@ -7,22 +7,34 @@ import { PriceContext } from "../contexts/PriceContext";
 import "./Placanje.css";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 import { TotalPersonsContext } from "../contexts/TotalPersonsContext";
+import { FormInputContext } from "../contexts/FormInputContext";
 
 export const Placanje = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [note, setNote] = useState("");
+  const { setAreFieldsFilled } = useContext(FormInputContext);
 
   const { date } = useContext(DateContext);
   const { selected } = useContext(SelectedItemsContext);
   const { totalPersons } = useContext(TotalPersonsContext);
 
-  console.log(date.toLocaleDateString("sr-Latn-RS"));
-  console.log(selected);
+  // console.log(date.toLocaleDateString("sr-Latn-RS"));
+  // console.log(selected);
 
   const { price } = useContext(PriceContext);
 
   // console.log(name, phone, note);
+
+  useEffect(() => {
+    if (name.trim() && phone.trim()) {
+      setAreFieldsFilled(true);
+    } else {
+      setAreFieldsFilled(false);
+    }
+  }, [name, phone]);
+
+  // console.log(areFieldsFilled);
 
   return (
     <div>
@@ -76,7 +88,7 @@ export const Placanje = () => {
                 sx={{
                   color: "secondary.main",
                   textAlign: "center",
-                  // textTransform: "uppercase",
+                  textTransform: "uppercase",
                 }}>
                 Odabrali ste
               </Typography>
@@ -86,19 +98,22 @@ export const Placanje = () => {
                     <>
                       <Typography
                         variant="body2"
-                        sx={{ color: "secondary.main" }}>
+                        sx={{ color: "secondary.main", fontStyle: "italic" }}>
                         {item}
                       </Typography>
                     </>
                   );
                 })}
-                <Typography variant="body2" sx={{ color: "secondary.main" }}>
-                  {totalPersons}{" "}
+                <Typography
+                  variant="body2"
+                  sx={{ color: "secondary.main", fontStyle: "italic" }}>
+                  ({totalPersons}{" "}
                   {totalPersons === 2 ||
                   totalPersons === 3 ||
                   totalPersons === 4
                     ? " osobe"
                     : " osoba"}
+                  )
                 </Typography>
               </Stack>
             </Stack>

@@ -80,8 +80,6 @@ export const MapaVelikiBazen2 = () => {
     setTotalPersons(lbPersons + bedPersons);
   }, [lbPersons, bedPersons]);
 
-  // console.log(selectedBeds);
-
   return (
     <>
       <LegendaKrevetLazybag />
@@ -127,7 +125,7 @@ export const MapaVelikiBazen2 = () => {
                 }}
                 mt={4}>
                 Ukupna cena: <br />
-                {price} RSD <br />
+                {price} RSD <br />(
                 {selectedBeds.length + lazyBags.length > 0
                   ? totalPersons +
                     (totalPersons === 2 ||
@@ -136,6 +134,7 @@ export const MapaVelikiBazen2 = () => {
                       ? " osobe"
                       : " osoba")
                   : "none"}
+                )
                 <br />
               </Typography>
             </Stack>

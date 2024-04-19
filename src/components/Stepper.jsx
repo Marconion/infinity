@@ -11,6 +11,7 @@ import { Placanje } from "./Placanje";
 import { Bazeni } from "./Bazeni";
 import { PriceContext } from "../contexts/PriceContext";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
+import { FormInputContext } from "../contexts/FormInputContext";
 
 const steps = ["Datum", "Krevet ili lazybag", "Kontakt"];
 
@@ -18,19 +19,9 @@ export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [note, setNote] = useState("");
-
   const { price, setPrice } = useContext(PriceContext);
-
-  // const [calendarValue, setCalendarValue] = useState(
-  //   new Date().toLocaleDateString("sr-Latn-rs")
-  // );
-
-  // const [selectedItems, setSelectedItems] = useState([]);
-
   const { selected, setSelected } = useContext(SelectedItemsContext);
+  const { areFieldsFilled } = useContext(FormInputContext);
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -140,12 +131,11 @@ export default function HorizontalLinearStepper() {
 
             <Button
               onClick={handleNext}
-              disabled={activeStep === 1 && selected.length === 0}>
-              {activeStep === steps.length - 1 ? (
-                <Button>Finish</Button>
-              ) : (
-                "Next"
-              )}
+              disabled={
+                (activeStep === 1 && selected.length === 0) ||
+                (activeStep === steps.length - 1 && !areFieldsFilled)
+              }>
+              {activeStep === steps.length - 1 ? "Finish" : "Next"}
               {/* Store name, phone and note on next */}
             </Button>
           </Box>
