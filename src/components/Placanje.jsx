@@ -1,6 +1,7 @@
-import { React, useState, useContext, useEffect } from "react";
-import { Stack, Typography, Divider } from "@mui/material";
+import { React, useState, useContext, useEffect, useRef } from "react";
+import { Stack, Typography, Divider, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
+
 import { motion } from "framer-motion";
 import { DateContext } from "../contexts/DateContext";
 import { PriceContext } from "../contexts/PriceContext";
@@ -8,23 +9,21 @@ import "./Placanje.css";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 import { TotalPersonsContext } from "../contexts/TotalPersonsContext";
 import { FormInputContext } from "../contexts/FormInputContext";
+import { PhoneErrorContext } from "../contexts/PhoneErrorContext";
+import emailjs from "@emailjs/browser";
 
 export const Placanje = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [note, setNote] = useState("");
-  const { setAreFieldsFilled } = useContext(FormInputContext);
 
+  const { phoneError, setPhoneError } = useContext(PhoneErrorContext);
+  const { setAreFieldsFilled } = useContext(FormInputContext);
   const { date } = useContext(DateContext);
   const { selected } = useContext(SelectedItemsContext);
   const { totalPersons } = useContext(TotalPersonsContext);
 
-  // console.log(date.toLocaleDateString("sr-Latn-RS"));
-  // console.log(selected);
-
   const { price } = useContext(PriceContext);
-
-  // console.log(name, phone, note);
 
   useEffect(() => {
     if (name.trim() && phone.trim()) {
@@ -34,7 +33,46 @@ export const Placanje = () => {
     }
   }, [name, phone]);
 
-  // console.log(areFieldsFilled);
+  const handlePhoneChange = (e) => {
+    const phone = e.target.value;
+
+    setPhone(phone);
+
+    // Validate phone number
+    const phoneRegex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
+    if (phone.trim() === "") {
+      setPhoneError(false);
+    } else if (!phoneRegex.test(phone)) {
+      setPhoneError(true);
+    } else {
+      setPhoneError(false);
+    }
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(e);
+  }
+
+  // SEND EMAIL
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm("service_31s5ofe", "template_merzmk9", form.current, {
+        publicKey: "rzg-IM__5DhzYYJ9U",
+      })
+      .then(
+        () => {
+          console.log("SUCCESS!");
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
+  };
 
   return (
     <div>
@@ -50,7 +88,7 @@ export const Placanje = () => {
           py={2}
           mb={10}>
           <Typography variant="h5" sx={{ color: "secondary.main" }}>
-            Plaćanje
+            Potvrda
           </Typography>
 
           <Stack
@@ -116,23 +154,46 @@ export const Placanje = () => {
                   )
                 </Typography>
               </Stack>
+              <Stack
+                direction="column"
+                className="napomena"
+                mb={2}
+                alignItems={"center"}>
+                <Typography
+                  variant="h6"
+                  sx={{ color: "secondary.main", fontSize: "15px" }}>
+                  Napomena
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "secondary.main", fontSize: "12px" }}>
+                  Rezervacije se čuvaju do 11:30h
+                </Typography>
+              </Stack>
             </Stack>
           </Stack>
 
           {/* FORM */}
           <Stack
+            onSubmit={sendEmail}
             component="form"
+            ref={form}
             sx={{
               "& .MuiTextField-root": { m: 1, width: "25ch" },
             }}
             noValidate
             autoComplete="off">
             <Stack
-              sx={{ display: "flex", margin: "auto", flexDirection: "column" }}>
+              sx={{
+                display: "flex",
+                margin: "auto",
+                flexDirection: "column",
+              }}>
               <TextField
                 required
                 id="filled-required"
                 label="Ime i prezime"
+                name="username"
                 variant="filled"
                 onChange={(e) => setName(e.target.value)}
               />
@@ -142,21 +203,44 @@ export const Placanje = () => {
                 id="filled-number"
                 label="Broj telefona"
                 type="tel"
+                name="phone"
                 //   InputLabelProps={{
                 //     shrink: true,
                 //   }}
                 variant="filled"
-                onChange={(e) => setPhone(e.target.value)}
+                error={phoneError}
+                helperText={phoneError ? "Unesite ispravan broj telefona" : ""}
+                onChange={handlePhoneChange}
               />
 
               <TextField
                 id="filled-helperText"
                 label="Napomena"
                 defaultValue=""
-                // helperText="Napomena"
+                name="note"
+                multiline="true"
+                spellCheck="false"
+                helperText="* Unesite dodatne informacije poput vremena dolaska, posebnih zahteva itd."
                 variant="filled"
                 onChange={(e) => setNote(e.target.value)}
               />
+
+              {/* Hidden fields for additional data */}
+              <input
+                type="hidden"
+                name="date"
+                value={date.toLocaleDateString("sr-Latn-RS")}
+              />
+              <input type="hidden" name="price" value={price} />
+              <input
+                type="hidden"
+                name="selected"
+                value={selected.join(", ")}
+              />
+              <input type="hidden" name="totalPersons" value={totalPersons} />
+              <Button type="submit" variant="contained">
+                Potvrdi
+              </Button>
             </Stack>
           </Stack>
         </Stack>

@@ -37,6 +37,10 @@
   text-align: center;
 }
 
+.span {
+  color: #5debd7;
+}
+
 @media screen and (max-width: 768px) {
   .naslovna-slika {
     width: 350%;
@@ -85,6 +89,42 @@
     transform: translate(-50%, -50%);
     transform: scale(2) rotate(-0.2deg);
     filter: blur(1px);
+
+    /* z-index: -1; */
+  }
+
+  .misli {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+    z-index: -1;
+  }
+
+  .image-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -180%);
+    color: white;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 4096px) {
+  .naslovna-slika {
+    width: 250%;
+    height: 90vh;
+    position: relative;
+    object-fit: cover;
+    top: -150px;
+    left: -75%;
+    transform: translate(-50%, -50%);
+    transform: scale(1) rotate(-0.2deg);
+    filter: blur(3px);
 
     /* z-index: -1; */
   }

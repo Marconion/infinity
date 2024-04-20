@@ -4,3 +4,10 @@
   border-radius: 10px;
   padding: 10px 10px 10px;
 }
+
+.napomena {
+  background-color: #c5ff95;
+  border: 1px solid #074173;
+  border-radius: 10px;
+  padding: 0 5px 5px;
+}

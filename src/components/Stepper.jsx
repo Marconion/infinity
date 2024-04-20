@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useContext } from "react";
-import Box from "@mui/material/Box";
+import { Box, Stack, Divider } from "@mui/material";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -12,6 +12,9 @@ import { Bazeni } from "./Bazeni";
 import { PriceContext } from "../contexts/PriceContext";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 import { FormInputContext } from "../contexts/FormInputContext";
+import { PhoneErrorContext } from "../contexts/PhoneErrorContext";
+import { FormRefContext } from "../contexts/FormRefContext";
+import logo from "../assets/images/infinity-house-logo-1.png";
 
 const steps = ["Datum", "Krevet ili lazybag", "Kontakt"];
 
@@ -22,6 +25,8 @@ export default function HorizontalLinearStepper() {
   const { price, setPrice } = useContext(PriceContext);
   const { selected, setSelected } = useContext(SelectedItemsContext);
   const { areFieldsFilled } = useContext(FormInputContext);
+  const { phoneError } = useContext(PhoneErrorContext);
+  const form = useContext(FormRefContext);
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -69,8 +74,28 @@ export default function HorizontalLinearStepper() {
     setPrice(0);
   };
 
+  function redirectHome() {
+    setTimeout(() => {
+      window.location.href = "/infinity/#/";
+    }, 4000);
+  }
+
+  // React.useEffect(() => {
+  //   if (activeStep === steps.length) {
+  //     redirectHome();
+  //   }
+  // });
+
+  // function handlTest() {
+  //   console.log("activeStep:", activeStep);
+  //   console.log("selected.length:", selected.length);
+  //   console.log("areFieldsFilled:", areFieldsFilled);
+  //   console.log("phoneError:", phoneError);
+  // }
+
   return (
     <Box
+      // formRef={form}
       sx={{
         width: "91%",
         display: "flex",
@@ -99,13 +124,45 @@ export default function HorizontalLinearStepper() {
 
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            Rezervisali ste. Hvala na poverenju !
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            className="napomena"
+            mt={5}
+            sx={{ boxShadow: "1px 1px 5px #000" }}>
+            <Typography
+              variant="h5"
+              sx={{ my: 1, mb: 1 }}
+              textAlign={"center"}
+              textTransform={"uppercase"}>
+              Rezervisali ste !
+            </Typography>
+            <Typography sx={{ my: 1 }} textAlign={"center"}>
+              Hvala na poverenju !
+            </Typography>
+          </Stack>
+          <Typography
+            variant="body2"
+            sx={{
+              mt: 3,
+              mx: 3,
+              fontStyle: "italic",
+            }}
+            textAlign={"center"}>
+            Uskoro ćete biti preusmereni na početnu stranicu.
           </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
+          <Divider sx={{ mt: 3, mb: 3 }} />
+          <Typography sx={{ mb: 1 }} textAlign={"center"}>
+            Vaš "Infinity House"
+          </Typography>
+          <Stack direction="row" justifyContent="center" alignItems="center">
+            <img
+              src={logo}
+              alt="infinity-house-logo"
+              style={{ width: "40%" }}
+            />
+          </Stack>
         </React.Fragment>
       ) : (
         <React.Fragment>
@@ -123,17 +180,14 @@ export default function HorizontalLinearStepper() {
               Back
             </Button>
             <Box sx={{ flex: "1 1 auto" }} />
-            {/* {isStepOptional(activeStep) && (
-                <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-                </Button>
-            )} */}
+            {/* <Button onClick={handlTest}>Test</Button> */}
 
             <Button
               onClick={handleNext}
               disabled={
                 (activeStep === 1 && selected.length === 0) ||
-                (activeStep === steps.length - 1 && !areFieldsFilled)
+                (activeStep === steps.length - 1 && !areFieldsFilled) ||
+                (activeStep === steps.length - 1 && phoneError)
               }>
               {activeStep === steps.length - 1 ? "Finish" : "Next"}
               {/* Store name, phone and note on next */}

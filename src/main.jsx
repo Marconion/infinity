@@ -15,6 +15,9 @@ import { SelectedItemsContextProvider } from "./contexts/SelectedItemsContext.js
 import { PriceProvider } from "./contexts/PriceContext.jsx";
 import { TotalPersonsProvider } from "./contexts/TotalPersonsContext.jsx";
 import { FormInputProvider } from "./contexts/FormInputContext.jsx";
+import { PhoneErrorProvider } from "./contexts/PhoneErrorContext.jsx";
+import { FormRefProvider } from "./contexts/FormRefContext.jsx";
+// import { SubmitFormProvider } from "./contexts/SubmitFormContext.jsx";
 
 const theme = createTheme({
   palette: {
@@ -26,6 +29,9 @@ const theme = createTheme({
       main: "#074173",
       button: "#C5FF95",
     },
+  },
+  typography: {
+    fontFamily: "Montserrat, sans-serif",
   },
 });
 
@@ -60,7 +66,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <SelectedItemsContextProvider>
             <TotalPersonsProvider>
               <FormInputProvider>
-                <RouterProvider router={router} />
+                <PhoneErrorProvider>
+                  <FormRefProvider>
+                    <RouterProvider router={router} />
+                  </FormRefProvider>
+                </PhoneErrorProvider>
               </FormInputProvider>
             </TotalPersonsProvider>
           </SelectedItemsContextProvider>
