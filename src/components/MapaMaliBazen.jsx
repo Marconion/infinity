@@ -82,132 +82,138 @@ export const MapaMaliBazen = () => {
 
   return (
     <>
-      <LegendaKrevetLazybag />
+      <Stack sx={{ height: "100vh" }}>
+        <LegendaKrevetLazybag />
 
-      <Stack
-        direction={"row"}
-        justifyContent={"space-between"}
-        alignItems={"center"}>
-        <Stack>
-          {krevetiLevo.map((_, index) => {
-            return (
-              <div
-                key={index}
-                className={`krevet ${
-                  selectedBeds.includes(`ML-${index}`) ? "selected" : ""
-                }`}
-                style={{ margin: 10 }}
-                onClick={() => handleClick(index, "ML")}>
-                ML-{index}
-              </div>
-            );
-          })}
-        </Stack>
-        <Stack direction={"column"}>
-          <Stack className="bazen-mali">
-            <Stack
-              direction={"row"}
-              mt={1}
-              spacing={2}
-              justifyContent={"center"}>
-              {krevetiBazen.map((_, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={`krevet ${
-                      selectedBeds.includes(`MVT-${index}`) ? "selected" : ""
-                    }`}
-                    onClick={() => handleClick(index, "MVT")}>
-                    MVT-{index}
-                  </div>
-                );
-              })}
-            </Stack>
-            <Stack direction={"row"} justifyContent={"space-between"} mt={2}>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}>
+          <Stack>
+            {krevetiLevo.map((_, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`krevet ${
+                    selectedBeds.includes(`ML-${index}`) ? "selected" : ""
+                  }`}
+                  style={{ margin: 10 }}
+                  onClick={() => handleClick(index, "ML")}>
+                  ML-{index}
+                </div>
+              );
+            })}
+          </Stack>
+          <Stack direction={"column"}>
+            <Stack className="bazen-mali">
               <Stack
-                direction={"column"}
+                direction={"row"}
                 mt={1}
-                spacing={4}
+                spacing={2}
                 justifyContent={"center"}>
-                {krevetiBazenLevo.map((_, index) => {
+                {krevetiBazen.map((_, index) => {
                   return (
                     <div
                       key={index}
                       className={`krevet ${
-                        selectedBeds.includes(`MVL-${index}`) ? "selected" : ""
+                        selectedBeds.includes(`MVT-${index}`) ? "selected" : ""
                       }`}
-                      onClick={() => handleClick(index, "MVL")}>
-                      MVL-{index}
+                      onClick={() => handleClick(index, "MVT")}>
+                      MVT-{index}
                     </div>
                   );
                 })}
               </Stack>
-              <Stack
-                direction={"column"}
-                mt={1}
-                spacing={4}
-                justifyContent={"center"}>
-                {krevetiBazenDesno.map((_, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={`krevet ${
-                        selectedBeds.includes(`MVD-${index}`) ? "selected" : ""
-                      }`}
-                      onClick={() => handleClick(index, "MVD")}>
-                      MVD-{index}
-                    </div>
-                  );
-                })}
+              <Stack direction={"row"} justifyContent={"space-between"} mt={2}>
+                <Stack
+                  direction={"column"}
+                  mt={1}
+                  spacing={4}
+                  justifyContent={"center"}>
+                  {krevetiBazenLevo.map((_, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className={`krevet ${
+                          selectedBeds.includes(`MVL-${index}`)
+                            ? "selected"
+                            : ""
+                        }`}
+                        onClick={() => handleClick(index, "MVL")}>
+                        MVL-{index}
+                      </div>
+                    );
+                  })}
+                </Stack>
+                <Stack
+                  direction={"column"}
+                  mt={1}
+                  spacing={4}
+                  justifyContent={"center"}>
+                  {krevetiBazenDesno.map((_, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className={`krevet ${
+                          selectedBeds.includes(`MVD-${index}`)
+                            ? "selected"
+                            : ""
+                        }`}
+                        onClick={() => handleClick(index, "MVD")}>
+                        MVD-{index}
+                      </div>
+                    );
+                  })}
+                </Stack>
               </Stack>
-            </Stack>
 
-            <Stack direction={"row"} justifyContent={"center"}>
-              <Typography
-                variant="h6"
-                sx={{
-                  color: "primary.main",
-                  fontSize: "12px",
-                  textAlign: "center",
-                }}
-                mt={2}>
-                Ukupna cena: <br />
-                {price} RSD <br />(
-                {selectedBeds.length > 0
-                  ? totalPersons +
-                    (totalPersons === 2 ||
-                    totalPersons === 3 ||
-                    totalPersons === 4
-                      ? " osobe"
-                      : " osoba")
-                  : "0 osoba"}
-                )
-              </Typography>
+              <Stack direction={"row"} justifyContent={"center"}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "primary.main",
+                    fontSize: "12px",
+                    textAlign: "center",
+                  }}
+                  mt={2}>
+                  Ukupna cena: <br />
+                  {price} RSD <br />(
+                  {selectedBeds.length > 0
+                    ? totalPersons +
+                      (totalPersons === 2 ||
+                      totalPersons === 3 ||
+                      totalPersons === 4
+                        ? " osobe"
+                        : " osoba")
+                    : "0 osoba"}
+                  )
+                </Typography>
+              </Stack>
             </Stack>
           </Stack>
+          <Stack>
+            {krevetiDesno.map((_, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`krevet ${
+                    selectedBeds.includes(`MD-${index}`) ? "selected" : ""
+                  }`}
+                  style={{ margin: 10 }}
+                  onClick={() => handleClick(index, "MD")}>
+                  MD-{index}
+                </div>
+              );
+            })}
+          </Stack>
         </Stack>
-        <Stack>
-          {krevetiDesno.map((_, index) => {
-            return (
-              <div
-                key={index}
-                className={`krevet ${
-                  selectedBeds.includes(`MD-${index}`) ? "selected" : ""
-                }`}
-                style={{ margin: 10 }}
-                onClick={() => handleClick(index, "MD")}>
-                MD-{index}
-              </div>
-            );
-          })}
-        </Stack>
-      </Stack>
 
-      {/* <Stack direction={"row"} justifyContent={"center"} mb={5}>
+        {/* <Stack direction={"row"} justifyContent={"center"} mb={5}>
         <Typography variant="h6" sx={{ color: "secondary.main" }} mb={5}>
           Ukupna cena: {totalPrice} RSD
         </Typography>
       </Stack> */}
+      </Stack>
     </>
   );
 };

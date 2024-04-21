@@ -4,6 +4,7 @@ import { Footer } from "./Footer";
 import { Stack, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import logo from "../assets/images/infinity-house-logo-1.png";
+import vector1 from "../assets/design_images/Vector 1.png";
 
 export const Ponuda = () => {
   return (
@@ -13,6 +14,7 @@ export const Ponuda = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}>
+        <img src={vector1} alt="infinity pool house" className="vector-top" />
         <Typography
           variant="h4"
           sx={{ textAlign: "center", mt: 5, color: "secondary.main" }}>
@@ -62,6 +64,11 @@ export const Ponuda = () => {
             style={{ width: "40%", marginBottom: "120px" }}
           />
         </Stack>
+        <img
+          src={vector1}
+          alt="infinity pool house"
+          className="vector-bottom"
+        />
       </motion.div>
       <Footer />
     </div>

@@ -15,6 +15,7 @@ import { FormInputContext } from "../contexts/FormInputContext";
 import { PhoneErrorContext } from "../contexts/PhoneErrorContext";
 import { FormRefContext } from "../contexts/FormRefContext";
 import logo from "../assets/images/infinity-house-logo-1.png";
+import vector1 from "../assets/design_images/Vector 1.png";
 
 const steps = ["Datum", "Krevet ili lazybag", "Kontakt"];
 
@@ -104,6 +105,7 @@ export default function HorizontalLinearStepper() {
         p: 2,
         justifyContent: "space-evenly",
       }}>
+      <img src={vector1} alt="infinity pool house" className="vector-top" />
       <Stepper activeStep={activeStep} sx={{ mt: 0, pt: 0 }}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -198,6 +200,7 @@ export default function HorizontalLinearStepper() {
           {activeStep === 2 ? <Placanje /> : null}
         </React.Fragment>
       )}
+      <img src={vector1} alt="infinity pool house" className="vector-bottom" />
     </Box>
   );
 }

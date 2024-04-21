@@ -33,6 +33,7 @@ export default function Calendar() {
             actions: ["today"],
           },
         }}
+        sx={{ bgcolor: "transparent" }}
       />
     </LocalizationProvider>
   );
