@@ -1,4 +1,5 @@
 import { React, useState, useContext, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Stack, Typography, Divider, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
@@ -18,12 +19,14 @@ export const Placanje = () => {
   const [note, setNote] = useState("");
 
   const { phoneError, setPhoneError } = useContext(PhoneErrorContext);
-  const { setAreFieldsFilled } = useContext(FormInputContext);
+  const { areFieldsFilled, setAreFieldsFilled } = useContext(FormInputContext);
   const { date } = useContext(DateContext);
   const { selected } = useContext(SelectedItemsContext);
   const { totalPersons } = useContext(TotalPersonsContext);
 
   const { price } = useContext(PriceContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (name.trim() && phone.trim()) {
@@ -51,15 +54,13 @@ export const Placanje = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(e);
+    sendEmail();
   }
 
   // SEND EMAIL
   const form = useRef();
 
   const sendEmail = (e) => {
-    e.preventDefault();
-
     emailjs
       .sendForm("service_31s5ofe", "template_merzmk9", form.current, {
         publicKey: "rzg-IM__5DhzYYJ9U",
@@ -67,6 +68,7 @@ export const Placanje = () => {
       .then(
         () => {
           console.log("SUCCESS!");
+          navigate("/potvrda");
         },
         (error) => {
           console.log("FAILED...", error.text);
@@ -175,7 +177,7 @@ export const Placanje = () => {
 
           {/* FORM */}
           <Stack
-            onSubmit={sendEmail}
+            onSubmit={handleSubmit}
             component="form"
             ref={form}
             sx={{
@@ -238,7 +240,10 @@ export const Placanje = () => {
                 value={selected.join(", ")}
               />
               <input type="hidden" name="totalPersons" value={totalPersons} />
-              <Button type="submit" variant="contained">
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={!areFieldsFilled || phoneError}>
                 Potvrdi
               </Button>
             </Stack>

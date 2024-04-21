@@ -17,6 +17,7 @@ import { TotalPersonsProvider } from "./contexts/TotalPersonsContext.jsx";
 import { FormInputProvider } from "./contexts/FormInputContext.jsx";
 import { PhoneErrorProvider } from "./contexts/PhoneErrorContext.jsx";
 import { FormRefProvider } from "./contexts/FormRefContext.jsx";
+import { PotvrdaPage } from "./components/PotvrdaPage.jsx";
 // import { SubmitFormProvider } from "./contexts/SubmitFormContext.jsx";
 
 const theme = createTheme({
@@ -55,6 +56,10 @@ const router = createHashRouter([
   {
     path: "/kontakt",
     element: <Kontakt />,
+  },
+  {
+    path: "/potvrda",
+    element: <PotvrdaPage />,
   },
 ]);
 

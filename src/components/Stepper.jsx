@@ -24,7 +24,7 @@ export default function HorizontalLinearStepper() {
 
   const { price, setPrice } = useContext(PriceContext);
   const { selected, setSelected } = useContext(SelectedItemsContext);
-  const { areFieldsFilled } = useContext(FormInputContext);
+  const { areFieldsFilled, setAreFieldsFilled } = useContext(FormInputContext);
   const { phoneError } = useContext(PhoneErrorContext);
   const form = useContext(FormRefContext);
 
@@ -189,7 +189,7 @@ export default function HorizontalLinearStepper() {
                 (activeStep === steps.length - 1 && !areFieldsFilled) ||
                 (activeStep === steps.length - 1 && phoneError)
               }>
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              {activeStep === steps.length - 1 ? null : "Next"}
               {/* Store name, phone and note on next */}
             </Button>
           </Box>

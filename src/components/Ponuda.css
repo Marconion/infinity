@@ -1,0 +1,18 @@
+.vector {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0.15;
+  overflow: hidden;
+}
+
+.vector-down {
+  position: absolute;
+  transform: rotate(180deg);
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  opacity: 0.15;
+  overflow: hidden;
+}
