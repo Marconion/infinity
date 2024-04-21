@@ -1,6 +1,7 @@
 // Calendar.jsx
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
+import { Stack } from "@mui/material";
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -24,17 +25,19 @@ export default function Calendar() {
   }, [selectedDate, setDate]);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <StaticDatePicker
-        defaultValue={dayjs(today)}
-        onChange={handleDateChange}
-        slotProps={{
-          actionBar: {
-            actions: ["today"],
-          },
-        }}
-        sx={{ bgcolor: "transparent" }}
-      />
-    </LocalizationProvider>
+    <Stack sx={{ height: "100%" }}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <StaticDatePicker
+          defaultValue={dayjs(today)}
+          onChange={handleDateChange}
+          slotProps={{
+            actionBar: {
+              actions: ["today"],
+            },
+          }}
+          sx={{ bgcolor: "transparent" }}
+        />
+      </LocalizationProvider>
+    </Stack>
   );
 }

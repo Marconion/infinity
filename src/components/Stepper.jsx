@@ -96,7 +96,6 @@ export default function HorizontalLinearStepper() {
 
   return (
     <Box
-      // formRef={form}
       sx={{
         width: "91%",
         display: "flex",

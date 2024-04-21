@@ -3,6 +3,7 @@ import { Stack, Container, Typography, Divider } from "@mui/material";
 import NavBar from "./Navbar";
 import { Footer } from "./Footer";
 import logo from "../assets/images/infinity-house-logo-1.png";
+import vector1 from "../assets/design_images/Vector 1.png";
 
 export const PotvrdaPage = () => {
   function redirectHome() {
@@ -16,8 +17,9 @@ export const PotvrdaPage = () => {
   });
 
   return (
-    <Stack>
+    <Stack sx={{ height: "100vh" }}>
       <NavBar />
+      <img src={vector1} alt="infinity pool house" className="vector-top" />
       <Container>
         <Stack
           direction="column"
@@ -55,6 +57,7 @@ export const PotvrdaPage = () => {
           <img src={logo} alt="infinity-house-logo" style={{ width: "40%" }} />
         </Stack>
       </Container>
+      <img src={vector1} alt="infinity pool house" className="vector-bottom" />
       <Footer />
     </Stack>
   );
