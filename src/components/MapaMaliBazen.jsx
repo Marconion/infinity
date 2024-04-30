@@ -24,6 +24,7 @@ export const MapaMaliBazen = () => {
   const [selectedBeds, setSelectedBeds] = useState([]);
   const [bedPersons, setBedPersons] = useState(0);
   const [reserved, setReserved] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   {
     /* CONTEXTS */
@@ -50,6 +51,7 @@ export const MapaMaliBazen = () => {
         const flattenedData = filteredData.map((item) => item.selected).flat();
         setReserved([...reserved, ...flattenedData]);
         console.log(filteredData);
+        setIsLoading(false);
       });
   }, []); // Add date as a dependency
   console.log(reserved);
@@ -106,6 +108,18 @@ export const MapaMaliBazen = () => {
   useEffect(() => {
     setTotalPersons(bedPersons);
   }, [bedPersons]);
+
+  if (isLoading)
+    return (
+      <Stack
+        alignItems={"center"}
+        justifyContent={"space-around"}
+        height={"70vh"}>
+        <Typography variant="h5" sx={{ color: "secondary.main" }}>
+          Loading...
+        </Typography>
+      </Stack>
+    );
 
   return (
     <>

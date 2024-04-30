@@ -19,11 +19,14 @@ export const MapaVelikiBazen2 = () => {
   const krevetiBazenDole = new Array(2).fill(0);
   const krevetiDole = new Array(5).fill(0);
 
+  // STATES
   const [lbPersons, setLbPersons] = useState(0);
   const [bedPersons, setBedPersons] = useState(0);
   const [selectedBeds, setSelectedBeds] = useState([]);
   const [reserved, setReserved] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // CONTEXTS
   const { price, setPrice } = useContext(PriceContext);
   const { setSelected } = useContext(SelectedItemsContext);
   const { totalPersons, setTotalPersons } = useContext(TotalPersonsContext);
@@ -45,6 +48,7 @@ export const MapaVelikiBazen2 = () => {
         const flattenedData = filteredData.map((item) => item.selected).flat();
         setReserved([...reserved, ...flattenedData]);
         console.log(filteredData);
+        setIsLoading(false);
       });
   }, []); // Add date as a dependency
   console.log(reserved);
@@ -107,10 +111,21 @@ export const MapaVelikiBazen2 = () => {
     setTotalPersons(lbPersons + bedPersons);
   }, [lbPersons, bedPersons]);
 
+  if (isLoading)
+    return (
+      <Stack
+        alignItems={"center"}
+        justifyContent={"space-around"}
+        height={"70vh"}>
+        <Typography variant="h5" sx={{ color: "secondary.main" }}>
+          Loading...
+        </Typography>
+      </Stack>
+    );
+
   return (
     <>
       <LegendaKrevetLazybag />
-
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Stack>
           {krevetiLevo.map((_, index) => {
@@ -219,7 +234,6 @@ export const MapaVelikiBazen2 = () => {
           })}
         </Stack>
       </Stack>
-
       <Stack direction={"row"} justifyContent={"space-around"} mx={0} mb={12}>
         {krevetiDole.map((_, index) => {
           const itemId = `V-${index}`;
