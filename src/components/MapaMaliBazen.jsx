@@ -23,6 +23,7 @@ export const MapaMaliBazen = () => {
   }
   const [selectedBeds, setSelectedBeds] = useState([]);
   const [bedPersons, setBedPersons] = useState(0);
+  const [reserved, setReserved] = useState([]);
 
   {
     /* CONTEXTS */
@@ -31,11 +32,31 @@ export const MapaMaliBazen = () => {
   const { totalPersons, setTotalPersons } = useContext(TotalPersonsContext);
 
   const { selected, setSelected } = useContext(SelectedItemsContext);
+  const { date } = useContext(DateContext);
+
+  console.log(date.toLocaleDateString("sr-Latn-RS"));
+  // Fetch the data from the server
+  useEffect(() => {
+    fetch("http://localhost:8050/posts")
+      .then((response) => response.json())
+      .then((data) => {
+        // Filter the data based on the selected date
+        const filteredData = data.posts.filter(
+          (post) => post.date === date.toLocaleDateString("sr-Latn-RS")
+        );
+        console.log(filteredData);
+
+        // Flatten the array and set the reserved state
+        const flattenedData = filteredData.map((item) => item.selected).flat();
+        setReserved([...reserved, ...flattenedData]);
+        console.log(filteredData);
+      });
+  }, []); // Add date as a dependency
+  console.log(reserved);
 
   {
     /* CHECK WEEKEND */
   }
-  const { date } = useContext(DateContext);
   const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
   {
@@ -50,6 +71,12 @@ export const MapaMaliBazen = () => {
 
   const handleClick = (index, type) => {
     const itemId = `${type}-${index}`;
+
+    // If the item is reserved, don't allow it to be selected
+    if (reserved.includes(itemId)) {
+      alert("Ovaj krevet je već rezervisan!");
+      return;
+    }
 
     if (selectedBeds.includes(itemId)) {
       setSelectedBeds(selectedBeds.filter((item) => item !== itemId));
@@ -91,12 +118,13 @@ export const MapaMaliBazen = () => {
           alignItems={"center"}>
           <Stack>
             {krevetiLevo.map((_, index) => {
+              const itemId = `ML-${index}`;
               return (
                 <div
                   key={index}
                   className={`krevet ${
-                    selectedBeds.includes(`ML-${index}`) ? "selected" : ""
-                  }`}
+                    selectedBeds.includes(itemId) ? "selected" : ""
+                  } ${reserved.includes(itemId) ? "reserved" : ""}`}
                   style={{ margin: 10 }}
                   onClick={() => handleClick(index, "ML")}>
                   ML-{index}
@@ -112,12 +140,13 @@ export const MapaMaliBazen = () => {
                 spacing={2}
                 justifyContent={"center"}>
                 {krevetiBazen.map((_, index) => {
+                  const itemId = `MVT-${index}`;
                   return (
                     <div
                       key={index}
                       className={`krevet ${
-                        selectedBeds.includes(`MVT-${index}`) ? "selected" : ""
-                      }`}
+                        selectedBeds.includes(itemId) ? "selected" : ""
+                      } ${reserved.includes(itemId) ? "reserved" : ""} `}
                       onClick={() => handleClick(index, "MVT")}>
                       MVT-{index}
                     </div>
@@ -131,14 +160,13 @@ export const MapaMaliBazen = () => {
                   spacing={4}
                   justifyContent={"center"}>
                   {krevetiBazenLevo.map((_, index) => {
+                    const itemId = `MVL-${index}`;
                     return (
                       <div
                         key={index}
                         className={`krevet ${
-                          selectedBeds.includes(`MVL-${index}`)
-                            ? "selected"
-                            : ""
-                        }`}
+                          selectedBeds.includes(itemId) ? "selected" : ""
+                        } ${reserved.includes(itemId) ? "reserved" : ""}`}
                         onClick={() => handleClick(index, "MVL")}>
                         MVL-{index}
                       </div>
@@ -151,14 +179,13 @@ export const MapaMaliBazen = () => {
                   spacing={4}
                   justifyContent={"center"}>
                   {krevetiBazenDesno.map((_, index) => {
+                    const itemId = `MVD-${index}`;
                     return (
                       <div
                         key={index}
                         className={`krevet ${
-                          selectedBeds.includes(`MVD-${index}`)
-                            ? "selected"
-                            : ""
-                        }`}
+                          selectedBeds.includes(itemId) ? "selected" : ""
+                        } ${reserved.includes(itemId) ? "reserved" : ""}`}
                         onClick={() => handleClick(index, "MVD")}>
                         MVD-{index}
                       </div>
@@ -193,12 +220,13 @@ export const MapaMaliBazen = () => {
           </Stack>
           <Stack>
             {krevetiDesno.map((_, index) => {
+              const itemId = `MD-${index}`;
               return (
                 <div
                   key={index}
                   className={`krevet ${
-                    selectedBeds.includes(`MD-${index}`) ? "selected" : ""
-                  }`}
+                    selectedBeds.includes(itemId) ? "selected" : ""
+                  } ${reserved.includes(itemId) ? "reserved" : ""}`}
                   style={{ margin: 10 }}
                   onClick={() => handleClick(index, "MD")}>
                   MD-{index}
