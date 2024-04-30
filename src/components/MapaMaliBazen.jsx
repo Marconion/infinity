@@ -6,6 +6,7 @@ import { LegendaKrevetLazybag } from "./LegendaKrevetLazybag";
 import { PriceContext } from "../contexts/PriceContext";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 import { TotalPersonsContext } from "../contexts/TotalPersonsContext";
+import { Alert, Modal } from "@mui/material";
 
 export const MapaMaliBazen = () => {
   {
@@ -25,6 +26,8 @@ export const MapaMaliBazen = () => {
   const [bedPersons, setBedPersons] = useState(0);
   const [reserved, setReserved] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
+  const [open, setOpen] = useState(false);
 
   {
     /* CONTEXTS */
@@ -56,6 +59,19 @@ export const MapaMaliBazen = () => {
   }, []); // Add date as a dependency
   console.log(reserved);
 
+  useEffect(() => {
+    if (showAlert) {
+      setOpen(true);
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+        setOpen(false);
+      }, 2000);
+
+      // Cleanup function to clear the timeout if the component unmounts before the timeout finishes
+      return () => clearTimeout(timer);
+    }
+  }, [showAlert]);
+
   {
     /* CHECK WEEKEND */
   }
@@ -76,7 +92,7 @@ export const MapaMaliBazen = () => {
 
     // If the item is reserved, don't allow it to be selected
     if (reserved.includes(itemId)) {
-      alert("Ovaj krevet je već rezervisan!");
+      setShowAlert(true);
       return;
     }
 
@@ -123,6 +139,13 @@ export const MapaMaliBazen = () => {
 
   return (
     <>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="alert-modal-title"
+        aria-describedby="alert-modal-description">
+        <Alert severity="info">Ovaj krevet je već rezervisan!</Alert>
+      </Modal>
       <Stack sx={{ height: "100vh" }}>
         <LegendaKrevetLazybag />
 
