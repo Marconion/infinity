@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const PORT = process.env.PORT || 8050;
+
 const { getStoredPosts, storePosts } = require("./data/posts");
 
 const app = express();
@@ -40,4 +42,4 @@ app.post("/posts", async (req, res) => {
   res.status(201).json({ message: "Stored new post.", post: newPost });
 });
 
-app.listen(8050);
+app.listen(PORT);
