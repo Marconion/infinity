@@ -152,6 +152,16 @@ export const MapaVelikiBazen2 = () => {
         <Alert severity="info">Ovaj krevet je već rezervisan!</Alert>
       </Modal>
       <LegendaKrevetLazybag />
+      <Typography
+        variant="h5"
+        sx={{
+          color: "secondary.main",
+          fontSize: "12px",
+          textAlign: "center",
+          pb: 2,
+        }}>
+        * kreveti na vodi nemaju suncobrane
+      </Typography>
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Stack>
           {krevetiLevo.map((_, index) => {
