@@ -18,6 +18,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Define a route handler for the root URL
+app.get("/", (req, res) => {
+  res.send("Hello, world!");
+});
+
 app.get("/posts", async (req, res) => {
   const storedPosts = await getStoredPosts();
   // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
