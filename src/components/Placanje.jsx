@@ -195,6 +195,11 @@ export const Placanje = () => {
                   sx={{ color: "secondary.main", fontSize: "12px" }}>
                   Rezervacije se čuvaju do 11:30h
                 </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "secondary.main", fontSize: "12px" }}>
+                  * Kreveti na vodi nemaju suncobrane
+                </Typography>
               </Stack>
             </Stack>
           </Stack>
