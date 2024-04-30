@@ -19,17 +19,38 @@ export const MapaVelikiBazen2 = () => {
   const krevetiBazenDole = new Array(2).fill(0);
   const krevetiDole = new Array(5).fill(0);
 
-  const [selectedBeds, setSelectedBeds] = useState([]);
-  const { price, setPrice } = useContext(PriceContext);
-  const { setSelected } = useContext(SelectedItemsContext);
   const [lbPersons, setLbPersons] = useState(0);
   const [bedPersons, setBedPersons] = useState(0);
-  const { totalPersons, setTotalPersons } = useContext(TotalPersonsContext);
+  const [selectedBeds, setSelectedBeds] = useState([]);
+  const [reserved, setReserved] = useState([]);
 
+  const { price, setPrice } = useContext(PriceContext);
+  const { setSelected } = useContext(SelectedItemsContext);
+  const { totalPersons, setTotalPersons } = useContext(TotalPersonsContext);
+  const { date } = useContext(DateContext);
+
+  console.log(date.toLocaleDateString("sr-Latn-RS"));
+  // Fetch the data from the server
+  useEffect(() => {
+    fetch("http://localhost:8050/posts")
+      .then((response) => response.json())
+      .then((data) => {
+        // Filter the data based on the selected date
+        const filteredData = data.posts.filter(
+          (post) => post.date === date.toLocaleDateString("sr-Latn-RS")
+        );
+        console.log(filteredData);
+
+        // Flatten the array and set the reserved state
+        const flattenedData = filteredData.map((item) => item.selected).flat();
+        setReserved([...reserved, ...flattenedData]);
+        console.log(filteredData);
+      });
+  }, []); // Add date as a dependency
+  console.log(reserved);
   {
     /* CHECK WEEKEND */
   }
-  const { date } = useContext(DateContext);
   const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
   {
@@ -42,6 +63,12 @@ export const MapaVelikiBazen2 = () => {
 
   const handleClick = (index, type) => {
     const itemId = `${type}-${index}`;
+
+    // If the item is reserved, don't allow it to be selected
+    if (reserved.includes(itemId)) {
+      alert("Ovaj krevet je već rezervisan!");
+      return;
+    }
 
     if (selectedBeds.includes(itemId)) {
       setSelectedBeds(selectedBeds.filter((item) => item !== itemId));
@@ -87,12 +114,13 @@ export const MapaVelikiBazen2 = () => {
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Stack>
           {krevetiLevo.map((_, index) => {
+            const itemId = `VL-${index}`;
             return (
               <div
                 key={index}
                 className={`krevet ${
-                  selectedBeds.includes(`VL-${index}`) ? "selected" : ""
-                }`}
+                  selectedBeds.includes(itemId) ? "selected" : ""
+                } ${reserved.includes(itemId) ? "reserved" : ""}`}
                 onClick={() => handleClick(index, "VL")}>
                 VL-{index}
               </div>
@@ -103,12 +131,13 @@ export const MapaVelikiBazen2 = () => {
           <Stack className="bazen">
             <Stack mt={3} spacing={5}>
               {krevetiBazen.map((_, index) => {
+                const itemId = `VV-${index}`;
                 return (
                   <div
                     key={index}
                     className={`krevet ${
-                      selectedBeds.includes(`VV-${index}`) ? "selected" : ""
-                    }`}
+                      selectedBeds.includes(itemId) ? "selected" : ""
+                    } ${reserved.includes(itemId) ? "reserved" : ""}`}
                     onClick={() => handleClick(index, "VV")}>
                     VV-{index}
                   </div>
@@ -145,12 +174,13 @@ export const MapaVelikiBazen2 = () => {
             mt={2}
             mx={2}>
             {krevetiBazenDole.map((_, index) => {
+              const itemId = `VBD-${index}`;
               return (
                 <div
                   key={index}
                   className={`krevet ${
-                    selectedBeds.includes(`VBD-${index}`) ? "selected" : ""
-                  }`}
+                    selectedBeds.includes(itemId) ? "selected" : ""
+                  } ${reserved.includes(itemId) ? "reserved" : ""}`}
                   onClick={() => handleClick(index, "VBD")}>
                   VBD-{index}
                 </div>
@@ -160,12 +190,13 @@ export const MapaVelikiBazen2 = () => {
         </Stack>
         <Stack>
           {lazyBags.map((_, index) => {
+            const itemId = `LB-${index}`;
             return (
               <div
                 key={index}
                 className={`lazyBag ${
-                  selectedBeds.includes(`LB-${index}`) ? "selected" : ""
-                }`}
+                  selectedBeds.includes(itemId) ? "selected" : ""
+                } ${reserved.includes(itemId) ? "reserved" : ""}`}
                 onClick={() => handleClick(index, "LB")}>
                 LB-{index}
               </div>
@@ -174,12 +205,13 @@ export const MapaVelikiBazen2 = () => {
         </Stack>
         <Stack>
           {krevetiDesno.map((_, index) => {
+            const itemId = `VD-${index}`;
             return (
               <div
                 key={index}
                 className={`krevet ${
-                  selectedBeds.includes(`VD-${index}`) ? "selected" : ""
-                }`}
+                  selectedBeds.includes(itemId) ? "selected" : ""
+                } ${reserved.includes(itemId) ? "reserved" : ""}`}
                 onClick={() => handleClick(index, "VD")}>
                 VD-{index}
               </div>
@@ -190,12 +222,13 @@ export const MapaVelikiBazen2 = () => {
 
       <Stack direction={"row"} justifyContent={"space-around"} mx={0} mb={12}>
         {krevetiDole.map((_, index) => {
+          const itemId = `V-${index}`;
           return (
             <div
               key={index}
               className={`krevet ${
-                selectedBeds.includes(`V-${index}`) ? "selected" : ""
-              }`}
+                selectedBeds.includes(itemId) ? "selected" : ""
+              } ${reserved.includes(itemId) ? "reserved" : ""}`}
               onClick={() => handleClick(index, "V")}>
               V-{index}
             </div>

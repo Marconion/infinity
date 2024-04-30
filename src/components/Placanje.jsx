@@ -51,29 +51,53 @@ export const Placanje = () => {
       setPhoneError(false);
     }
   };
-
   function handleSubmit(e) {
     e.preventDefault();
-    sendEmail();
+
+    // Create an object with the data
+    const data = {
+      name,
+      date: date.toLocaleDateString("sr-Latn-RS"),
+      phone,
+      selected,
+      note,
+    };
+
+    // Make a POST request to your server
+    fetch("http://localhost:8050/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        sendEmail();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 
   // SEND EMAIL
   const form = useRef();
 
   const sendEmail = (e) => {
-    emailjs
-      .sendForm("service_31s5ofe", "template_merzmk9", form.current, {
-        publicKey: "rzg-IM__5DhzYYJ9U",
-      })
-      .then(
-        () => {
-          console.log("SUCCESS!");
-          navigate("/potvrda");
-        },
-        (error) => {
-          console.log("FAILED...", error.text);
-        }
-      );
+    // emailjs
+    //   .sendForm("service_31s5ofe", "template_merzmk9", form.current, {
+    //     publicKey: "rzg-IM__5DhzYYJ9U",
+    //   })
+    //   .then(
+    //     () => {
+    console.log("SUCCESS!");
+    navigate("/potvrda");
+    // },
+    // (error) => {
+    // console.log("FAILED...", error.text);
+    // }
+    // );
   };
 
   return (

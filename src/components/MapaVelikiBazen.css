@@ -34,6 +34,10 @@
   background-color: #c5ff95;
   color: black;
 }
+.reserved {
+  background-color: #ff9595;
+  color: black;
+}
 
 #container-outer {
   width: 100%;
