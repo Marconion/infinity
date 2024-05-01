@@ -1,7 +1,7 @@
 // Admin.js
 import React, { useState, useEffect } from "react";
 import NavBar from "./Navbar";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 
 export const Admin = () => {
   const [reservations, setReservations] = useState([]);
@@ -24,7 +24,7 @@ export const Admin = () => {
       return;
     }
 
-    const response = await fetch(`http://localhost:8050/posts/${id}`, {
+    const response = await fetch(`https://infinity-server-9lxr.onrender.com/posts/${id}`, {
       method: "DELETE",
     });
 
@@ -54,7 +54,7 @@ export const Admin = () => {
         <Typography variant="h5">Brisanje rezervacija</Typography>
       </Stack>
       <Stack
-        sx={{ m: 5 }}
+        sx={{ m: 3 }}
         alignItems={"center"}
         justifyContent={"space-between"}>
         {reservations.posts &&
@@ -67,51 +67,74 @@ export const Admin = () => {
             .map(
               (reservation) =>
                 reservation.userType !== "user" && (
-                  <Stack
-                    direction={"row"}
+                  <Grid
                     spacing={2}
-                    p={1}
+                    p={0.5}
                     justifyContent={"space-between"}
                     sx={{ border: "1px solid black", width: "100%" }}
                     key={reservation.id}>
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontSize: "12px",
-                      }}>
-                      {reservation.date.toLocaleDateString()}
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontSize: "12px",
-                      }}>
-                      {reservation.name}
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontSize: "12px",
-                      }}>
-                      {reservation.phone}
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      size="small"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        handleDelete(reservation.id, reservation.userType);
-                      }}>
-                      Delete
-                    </Button>
-                  </Stack>
+                    <Grid
+                      container
+                      justifyContent={"space-between"}
+                      //   item
+                      xs={12}>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontSize: "12px",
+                            m: 1,
+                          }}>
+                          {reservation.date.toLocaleDateString()}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontSize: "12px",
+                            m: 1,
+                          }}>
+                          {reservation.name}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontSize: "12px",
+                            m: 1,
+                          }}>
+                          {reservation.phone}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          size="small"
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            fontSize: "12px",
+                            m: 1,
+                          }}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            handleDelete(reservation.id, reservation.userType);
+                          }}>
+                          Delete
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 )
             )}
       </Stack>

@@ -17,8 +17,8 @@ export default function Login() {
     e.preventDefault();
 
     const response = await fetch(
-      //   "https://infinity-server-9lxr.onrender.com/login",
-      "http://localhost:8050/login",
+      "https://infinity-server-9lxr.onrender.com/login",
+      // "http://localhost:8050/login",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
