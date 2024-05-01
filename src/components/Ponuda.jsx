@@ -5,6 +5,7 @@ import { Stack, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import logo from "../assets/images/infinity-house-logo-1.png";
 import vector1 from "../assets/design_images/Vector 1.png";
+// import "./Ponuda.css";
 
 export const Ponuda = () => {
   return (
@@ -54,21 +55,17 @@ export const Ponuda = () => {
         </Typography>
 
         <Stack
-          direction="row"
+          direction="column"
           justifyContent="center"
           alignItems="center"
           mt={1}>
+          <img src={logo} alt="infinity-house-logo" style={{ width: "40%" }} />
           <img
-            src={logo}
-            alt="infinity-house-logo"
-            style={{ width: "40%", marginBottom: "120px" }}
+            src={vector1}
+            alt="infinity pool house"
+            className="vector-bottom"
           />
         </Stack>
-        <img
-          src={vector1}
-          alt="infinity pool house"
-          className="vector-bottom"
-        />
       </motion.div>
       <Footer />
     </div>

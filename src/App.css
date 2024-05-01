@@ -52,6 +52,7 @@
 
 .vector-bottom {
   position: absolute;
+  margin-bottom: -50px;
   bottom: 0;
   right: 0;
   width: 100%;
@@ -95,6 +96,16 @@
     color: white;
     text-align: center;
   }
+
+  /* .vector-bottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    opacity: 0.15;
+    transform: rotate(180deg);
+    z-index: -1;
+  } */
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {

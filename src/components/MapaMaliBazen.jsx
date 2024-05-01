@@ -41,7 +41,7 @@ export const MapaMaliBazen = () => {
   console.log(date.toLocaleDateString("sr-Latn-RS"));
   // Fetch the data from the server
   useEffect(() => {
-    fetch("http://localhost:8050/posts")
+    fetch("https://infinity-server-9lxr.onrender.com/posts")
       .then((response) => response.json())
       .then((data) => {
         // Filter the data based on the selected date

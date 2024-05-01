@@ -18,7 +18,7 @@ import { FormInputProvider } from "./contexts/FormInputContext.jsx";
 import { PhoneErrorProvider } from "./contexts/PhoneErrorContext.jsx";
 import { FormRefProvider } from "./contexts/FormRefContext.jsx";
 import { PotvrdaPage } from "./components/PotvrdaPage.jsx";
-// import { SubmitFormProvider } from "./contexts/SubmitFormContext.jsx";
+import Login from "./components/Login.jsx";
 
 const theme = createTheme({
   palette: {
@@ -60,6 +60,10 @@ const router = createHashRouter([
   {
     path: "/potvrda",
     element: <PotvrdaPage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 

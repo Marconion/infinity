@@ -64,7 +64,7 @@ export const Placanje = () => {
     };
 
     // Make a POST request to your server
-    fetch("http://localhost:8050/posts", {
+    fetch("https://infinity-server-9lxr.onrender.com/posts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -12,6 +12,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { motion } from "framer-motion";
 
 export default function SideMenu() {
@@ -83,6 +84,15 @@ export default function SideMenu() {
             <Stack direction="row" spacing={1} alignItems={"center"}>
               <ConnectWithoutContactIcon />
               <Typography variant="h7">Kontakt</Typography>
+            </Stack>
+          </Button>
+        </Link>
+        <Divider />
+        <Link to="/login">
+          <Button>
+            <Stack direction="row" spacing={1} alignItems={"center"}>
+              <AdminPanelSettingsIcon />
+              <Typography variant="h7">Login</Typography>
             </Stack>
           </Button>
         </Link>
