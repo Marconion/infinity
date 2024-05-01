@@ -23,7 +23,6 @@ import BazeniTabsAdmin from "./components/BazeniTabsAdmin.jsx";
 import HorizontalLinearStepperAdmin from "./components/StepperAdmin.jsx";
 import { Admin } from "./components/Admin.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
-import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 
 const theme = createTheme({
   palette: {
@@ -71,7 +70,7 @@ const router = createHashRouter([
     element: <Login />,
   },
   {
-    path: "/admin/*",
+    path: "/admin",
     element: <Admin />,
   },
 ]);

@@ -1,4 +1,3 @@
-// Admin.js
 import React, { useState, useEffect } from "react";
 import NavBar from "./Navbar";
 import { Button, Grid, Stack, Typography } from "@mui/material";
@@ -7,7 +6,6 @@ export const Admin = () => {
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
-    // Replace with your actual API
     // fetch("http://localhost:8050/posts")
     fetch("https://infinity-server-9lxr.onrender.com/posts")
       .then((response) => response.json())
@@ -18,7 +16,6 @@ export const Admin = () => {
   }, []);
   console.log(reservations.posts);
 
-  // Replace with your actual API
   const handleDelete = async (id, userType) => {
     if (userType === "users") {
       alert("Cannot delete user posts");
@@ -58,7 +55,7 @@ export const Admin = () => {
         <Typography variant="h5">Brisanje rezervacija</Typography>
       </Stack>
       <Stack
-        sx={{ m: 3 }}
+        sx={{ m: 1 }}
         alignItems={"center"}
         justifyContent={"space-between"}>
         {reservations.posts &&
@@ -116,6 +113,18 @@ export const Admin = () => {
                             m: 1,
                           }}>
                           {reservation.phone}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            fontSize: "12px",
+                            m: 1,
+                          }}>
+                          {reservation.selected.join(", ")}
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
