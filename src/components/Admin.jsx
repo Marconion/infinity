@@ -8,7 +8,8 @@ export const Admin = () => {
 
   useEffect(() => {
     // Replace with your actual API
-    fetch("http://localhost:8050/posts")
+    // fetch("http://localhost:8050/posts")
+    fetch("https://infinity-server-9lxr.onrender.com/posts")
       .then((response) => response.json())
       .then((data) => {
         const { users, ...postsData } = data;
@@ -24,9 +25,12 @@ export const Admin = () => {
       return;
     }
 
-    const response = await fetch(`https://infinity-server-9lxr.onrender.com/posts/${id}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `https://infinity-server-9lxr.onrender.com/posts/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (response.ok) {
       setReservations({
