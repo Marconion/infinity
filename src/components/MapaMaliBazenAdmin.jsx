@@ -8,7 +8,7 @@ import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 import { TotalPersonsContext } from "../contexts/TotalPersonsContext";
 import { Alert, Modal } from "@mui/material";
 
-export const MapaMaliBazen = () => {
+export const MapaMaliBazenAdmin = () => {
   {
     /* ARRAYS */
   }
@@ -145,20 +145,14 @@ export const MapaMaliBazen = () => {
         onClose={() => setOpen(false)}
         aria-labelledby="alert-modal-title"
         aria-describedby="alert-modal-description">
-        <Alert severity="info">Ovaj krevet je već rezervisan!</Alert>
+        <Alert severity="info">Obrisano</Alert>
       </Modal>
       <Stack sx={{ height: "100vh" }}>
-        <LegendaKrevetLazybag />
-        <Typography
-          variant="h5"
-          sx={{
-            color: "secondary.main",
-            fontSize: "12px",
-            textAlign: "center",
-            pb: 2,
-          }}>
-          * kreveti na vodi nemaju suncobrane
-        </Typography>
+        <Stack direction={"row"} justifyContent={"center"} my={2}>
+          <Typography variant="h5" sx={{ color: "secondary.main" }}>
+            Admin - mali bazen
+          </Typography>
+        </Stack>
         <Stack
           direction={"row"}
           justifyContent={"space-between"}

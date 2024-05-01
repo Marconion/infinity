@@ -19,6 +19,11 @@ import { PhoneErrorProvider } from "./contexts/PhoneErrorContext.jsx";
 import { FormRefProvider } from "./contexts/FormRefContext.jsx";
 import { PotvrdaPage } from "./components/PotvrdaPage.jsx";
 import Login from "./components/Login.jsx";
+import BazeniTabsAdmin from "./components/BazeniTabsAdmin.jsx";
+import HorizontalLinearStepperAdmin from "./components/StepperAdmin.jsx";
+import { Admin } from "./components/Admin.jsx";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
+import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 
 const theme = createTheme({
   palette: {
@@ -65,6 +70,10 @@ const router = createHashRouter([
     path: "/login",
     element: <Login />,
   },
+  {
+    path: "/admin/*",
+    element: <Admin />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -77,7 +86,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <FormInputProvider>
                 <PhoneErrorProvider>
                   <FormRefProvider>
-                    <RouterProvider router={router} />
+                    <AuthProvider>
+                      <RouterProvider router={router} />
+                    </AuthProvider>
                   </FormRefProvider>
                 </PhoneErrorProvider>
               </FormInputProvider>

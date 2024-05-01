@@ -1,41 +1,41 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import Modal from "@mui/material/Modal";
+
 import "./MapaVelikiBazen.css";
 import { DateContext } from "../contexts/DateContext";
 import { LegendaKrevetLazybag } from "./LegendaKrevetLazybag";
 import { PriceContext } from "../contexts/PriceContext";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
 import { TotalPersonsContext } from "../contexts/TotalPersonsContext";
-import { Alert, Modal } from "@mui/material";
+import NavBar from "./Navbar";
 
-export const MapaMaliBazen = () => {
+export const MapaVelikiBazen2Admin = () => {
+  const types = ["VL", "VV", "VBD", "VD", "V", "LB"];
   {
-    /* ARRAYS */
+    /* KREVETI I LAZYBAGS */
   }
-  const krevetiLevo = new Array(4).fill(0);
-  const krevetiBazen = new Array(3).fill(0);
-  const krevetiDesno = new Array(4).fill(0);
-  //   const lazyBags = new Array(8).fill(0);
-  const krevetiBazenLevo = new Array(2).fill(0);
-  const krevetiBazenDesno = new Array(2).fill(0);
+  const krevetiLevo = new Array(8).fill(0);
+  const krevetiBazen = new Array(4).fill(0);
+  const krevetiDesno = new Array(8).fill(0);
+  const lazyBags = new Array(8).fill(0);
+  const krevetiBazenDole = new Array(2).fill(0);
+  const krevetiDole = new Array(5).fill(0);
 
-  {
-    /* STATES */
-  }
-  const [selectedBeds, setSelectedBeds] = useState([]);
+  // STATES
+  const [lbPersons, setLbPersons] = useState(0);
   const [bedPersons, setBedPersons] = useState(0);
+  const [selectedBeds, setSelectedBeds] = useState([]);
   const [reserved, setReserved] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const [open, setOpen] = useState(false);
 
-  {
-    /* CONTEXTS */
-  }
+  // CONTEXTS
   const { price, setPrice } = useContext(PriceContext);
+  const { setSelected } = useContext(SelectedItemsContext);
   const { totalPersons, setTotalPersons } = useContext(TotalPersonsContext);
-
-  const { selected, setSelected } = useContext(SelectedItemsContext);
   const { date } = useContext(DateContext);
 
   console.log(date.toLocaleDateString("sr-Latn-RS"));
@@ -82,11 +82,9 @@ export const MapaMaliBazen = () => {
     /* CENE */
   }
   const bedPrice = isWeekend ? 6000 : 5000;
+  const lazyBagPrice = isWeekend ? 3000 : 2500;
 
-  {
-    /* TYPES */
-  }
-  const isBedType = (type) => ["ML", "MVT", "MVL", "MVD", "MD"].includes(type);
+  const isBedType = (type) => ["VL", "VV", "VBD", "VD", "V"].includes(type);
 
   const handleClick = (index, type) => {
     const itemId = `${type}-${index}`;
@@ -102,6 +100,9 @@ export const MapaMaliBazen = () => {
       setPrice(
         (prevPrice) => prevPrice - (type === "LB" ? lazyBagPrice : bedPrice)
       );
+      setLbPersons(
+        type === "LB" ? (prevPersons) => prevPersons - 1 : lbPersons
+      );
       setBedPersons(
         isBedType(type) ? (prevPersons) => prevPersons - 2 : bedPersons
       );
@@ -110,21 +111,34 @@ export const MapaMaliBazen = () => {
       setSelected((prevSelected) =>
         prevSelected.filter((item) => item !== itemId)
       );
+
+      // Send a DELETE request to the server to remove the selected bed
+      fetch(`http://localhost:8050/posts/${itemId}`, {
+        method: "DELETE",
+      }).then(() => {
+        // Update the reserved state
+        setReserved(reserved.filter((item) => item !== itemId));
+      });
     } else {
       setSelectedBeds([...selectedBeds, itemId]);
       setPrice(
         (prevPrice) => prevPrice + (type === "LB" ? lazyBagPrice : bedPrice)
       );
+      setLbPersons(
+        type === "LB" ? (prevPersons) => prevPersons + 1 : lbPersons
+      );
       setBedPersons(
         isBedType(type) ? (prevPersons) => prevPersons + 2 : bedPersons
       );
+
+      // Add item to selected state
       setSelected((prevSelected) => [...prevSelected, itemId]);
     }
   };
 
   useEffect(() => {
-    setTotalPersons(bedPersons);
-  }, [bedPersons]);
+    setTotalPersons(lbPersons + bedPersons);
+  }, [lbPersons, bedPersons]);
 
   if (isLoading)
     return (
@@ -140,107 +154,58 @@ export const MapaMaliBazen = () => {
 
   return (
     <>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="alert-modal-title"
-        aria-describedby="alert-modal-description">
-        <Alert severity="info">Ovaj krevet je već rezervisan!</Alert>
-      </Modal>
-      <Stack sx={{ height: "100vh" }}>
-        <LegendaKrevetLazybag />
-        <Typography
-          variant="h5"
-          sx={{
-            color: "secondary.main",
-            fontSize: "12px",
-            textAlign: "center",
-            pb: 2,
-          }}>
-          * kreveti na vodi nemaju suncobrane
-        </Typography>
-        <Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          p: 2,
+        }}>
+        <Stack direction={"row"} justifyContent={"center"} my={2}>
+          <Typography variant="h5" sx={{ color: "secondary.main" }}>
+            Admin - veliki bazen
+          </Typography>
+        </Stack>
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+          aria-labelledby="alert-modal-title"
+          aria-describedby="alert-modal-description">
+          <Alert severity="info">Obrisano</Alert>
+        </Modal>
+
+        <Stack direction={"row"} justifyContent={"space-between"}>
           <Stack>
             {krevetiLevo.map((_, index) => {
-              const itemId = `ML-${index}`;
+              const itemId = `VL-${index}`;
               return (
                 <div
                   key={index}
                   className={`krevet ${
                     selectedBeds.includes(itemId) ? "selected" : ""
                   } ${reserved.includes(itemId) ? "reserved" : ""}`}
-                  style={{ margin: 10 }}
-                  onClick={() => handleClick(index, "ML")}>
-                  ML-{index}
+                  onClick={() => handleClick(index, "VL")}>
+                  VL-{index}
                 </div>
               );
             })}
           </Stack>
           <Stack direction={"column"}>
-            <Stack className="bazen-mali">
-              <Stack
-                direction={"row"}
-                mt={1}
-                spacing={2}
-                justifyContent={"center"}>
+            <Stack className="bazen">
+              <Stack mt={3} spacing={5}>
                 {krevetiBazen.map((_, index) => {
-                  const itemId = `MVT-${index}`;
+                  const itemId = `VV-${index}`;
                   return (
                     <div
                       key={index}
                       className={`krevet ${
                         selectedBeds.includes(itemId) ? "selected" : ""
-                      } ${reserved.includes(itemId) ? "reserved" : ""} `}
-                      onClick={() => handleClick(index, "MVT")}>
-                      MVT-{index}
+                      } ${reserved.includes(itemId) ? "reserved" : ""}`}
+                      onClick={() => handleClick(index, "VV")}>
+                      VV-{index}
                     </div>
                   );
                 })}
               </Stack>
-              <Stack direction={"row"} justifyContent={"space-between"} mt={2}>
-                <Stack
-                  direction={"column"}
-                  mt={1}
-                  spacing={4}
-                  justifyContent={"center"}>
-                  {krevetiBazenLevo.map((_, index) => {
-                    const itemId = `MVL-${index}`;
-                    return (
-                      <div
-                        key={index}
-                        className={`krevet ${
-                          selectedBeds.includes(itemId) ? "selected" : ""
-                        } ${reserved.includes(itemId) ? "reserved" : ""}`}
-                        onClick={() => handleClick(index, "MVL")}>
-                        MVL-{index}
-                      </div>
-                    );
-                  })}
-                </Stack>
-                <Stack
-                  direction={"column"}
-                  mt={1}
-                  spacing={4}
-                  justifyContent={"center"}>
-                  {krevetiBazenDesno.map((_, index) => {
-                    const itemId = `MVD-${index}`;
-                    return (
-                      <div
-                        key={index}
-                        className={`krevet ${
-                          selectedBeds.includes(itemId) ? "selected" : ""
-                        } ${reserved.includes(itemId) ? "reserved" : ""}`}
-                        onClick={() => handleClick(index, "MVD")}>
-                        MVD-{index}
-                      </div>
-                    );
-                  })}
-                </Stack>
-              </Stack>
-
               <Stack direction={"row"} justifyContent={"center"}>
                 <Typography
                   variant="h6"
@@ -249,46 +214,89 @@ export const MapaMaliBazen = () => {
                     fontSize: "12px",
                     textAlign: "center",
                   }}
-                  mt={2}>
+                  mt={4}>
                   Ukupna cena: <br />
                   {price} RSD <br />(
-                  {selectedBeds.length > 0
+                  {selectedBeds.length + lazyBags.length > 0
                     ? totalPersons +
                       (totalPersons === 2 ||
                       totalPersons === 3 ||
                       totalPersons === 4
                         ? " osobe"
                         : " osoba")
-                    : "0 osoba"}
+                    : "none"}
                   )
+                  <br />
                 </Typography>
               </Stack>
             </Stack>
+            <Stack
+              direction={"row"}
+              justifyContent={"space-between"}
+              mt={2}
+              mx={2}>
+              {krevetiBazenDole.map((_, index) => {
+                const itemId = `VBD-${index}`;
+                return (
+                  <div
+                    key={index}
+                    className={`krevet ${
+                      selectedBeds.includes(itemId) ? "selected" : ""
+                    } ${reserved.includes(itemId) ? "reserved" : ""}`}
+                    onClick={() => handleClick(index, "VBD")}>
+                    VBD-{index}
+                  </div>
+                );
+              })}
+            </Stack>
+          </Stack>
+          <Stack>
+            {lazyBags.map((_, index) => {
+              const itemId = `LB-${index}`;
+              return (
+                <div
+                  key={index}
+                  className={`lazyBag ${
+                    selectedBeds.includes(itemId) ? "selected" : ""
+                  } ${reserved.includes(itemId) ? "reserved" : ""}`}
+                  onClick={() => handleClick(index, "LB")}>
+                  LB-{index}
+                </div>
+              );
+            })}
           </Stack>
           <Stack>
             {krevetiDesno.map((_, index) => {
-              const itemId = `MD-${index}`;
+              const itemId = `VD-${index}`;
               return (
                 <div
                   key={index}
                   className={`krevet ${
                     selectedBeds.includes(itemId) ? "selected" : ""
                   } ${reserved.includes(itemId) ? "reserved" : ""}`}
-                  style={{ margin: 10 }}
-                  onClick={() => handleClick(index, "MD")}>
-                  MD-{index}
+                  onClick={() => handleClick(index, "VD")}>
+                  VD-{index}
                 </div>
               );
             })}
           </Stack>
         </Stack>
-
-        {/* <Stack direction={"row"} justifyContent={"center"} mb={5}>
-        <Typography variant="h6" sx={{ color: "secondary.main" }} mb={5}>
-          Ukupna cena: {totalPrice} RSD
-        </Typography>
-      </Stack> */}
-      </Stack>
+        <Stack direction={"row"} justifyContent={"space-around"} mx={0} mb={12}>
+          {krevetiDole.map((_, index) => {
+            const itemId = `V-${index}`;
+            return (
+              <div
+                key={index}
+                className={`krevet ${
+                  selectedBeds.includes(itemId) ? "selected" : ""
+                } ${reserved.includes(itemId) ? "reserved" : ""}`}
+                onClick={() => handleClick(index, "V")}>
+                V-{index}
+              </div>
+            );
+          })}
+        </Stack>
+      </Box>
     </>
   );
 };
