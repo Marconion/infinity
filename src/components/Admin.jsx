@@ -62,7 +62,7 @@ export const Admin = () => {
           id="date"
           label="Filter by Date"
           type="date"
-          sx={{ mt: 4 }}
+          sx={{ mt: 4, zIndex: -1 }}
           value={selectedDate || new Date().toISOString().split("T")[0]}
           onChange={handleDateChange}
           InputLabelProps={{
@@ -131,7 +131,6 @@ export const Admin = () => {
                             fontSize: "12px",
                             m: 1,
                           }}>
-                          {/* <div style={{ marginRight: 2 }}>Tel: </div> */}
                           <a href={`tel: ${reservation.phone}`}>
                             {reservation.phone}
                           </a>
