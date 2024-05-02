@@ -3,7 +3,6 @@ import NavBar from "./Navbar";
 import { Typography, Stack } from "@mui/material";
 import { Footer } from "./Footer";
 import "../components/kontakt.css";
-import water2 from "../assets/images/water (2).jpg";
 import vector1 from "../assets/design_images/Vector 1.png";
 import { motion } from "framer-motion";
 
@@ -11,7 +10,6 @@ export const Kontakt = () => {
   return (
     <div>
       <NavBar />
-      {/* <img src={water2} alt="water2" className="grayscale" /> */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -25,7 +23,6 @@ export const Kontakt = () => {
               padding: "20px",
               color: "secondary.main",
               mt: 1,
-              // textShadow: "1px 1px 8px #000000",
             }}>
             Lokacija i kontakt
           </Typography>

@@ -115,7 +115,44 @@ export const Admin = () => {
                           Tel: {reservation.phone}
                         </Typography>
                       </Grid>
-                      <Grid item xs={4}>
+                      <Grid
+                        item
+                        xs={4}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                        }}>
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-around",
+                            alignItems: "flex",
+
+                            fontSize: "12px",
+                            m: 1,
+                          }}>
+                          <div
+                            style={{
+                              border: "1px solid black",
+                              borderRadius: "5px",
+                              padding: "3px",
+                              backgroundColor: "#C5FF95",
+                            }}>
+                            {reservation.selected.join(", ")}
+                          </div>
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={4}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                        }}>
                         <Typography
                           variant="h5"
                           sx={{
@@ -130,8 +167,9 @@ export const Admin = () => {
                               borderRadius: "5px",
                               padding: "3px",
                               backgroundColor: "#C5FF95",
+                              fontSize: "10px",
                             }}>
-                            {reservation.selected.join(", ")}
+                            {reservation.note}
                           </div>
                         </Typography>
                       </Grid>
