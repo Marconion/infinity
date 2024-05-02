@@ -4,6 +4,7 @@ import { Typography, Stack } from "@mui/material";
 import { Footer } from "./Footer";
 import "../components/kontakt.css";
 import water2 from "../assets/images/water (2).jpg";
+import vector1 from "../assets/design_images/Vector 1.png";
 import { motion } from "framer-motion";
 
 export const Kontakt = () => {
@@ -15,28 +16,27 @@ export const Kontakt = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}>
-        <div className="grayscale">
+        <img src={vector1} alt="infinity pool house" className="vector-top" />
+        <div>
           <Typography
             variant="h5"
             sx={{
               textAlign: "center",
               padding: "20px",
-              color: "white",
-              textShadow: "1px 1px 8px #000000",
+              color: "secondary.main",
+              mt: 1,
+              // textShadow: "1px 1px 8px #000000",
             }}>
             Lokacija i kontakt
           </Typography>
-          <Stack
-            spacing={2}
-            py={4}
-            sx={{ color: "white", textShadow: "1px 1px 8px #000000" }}>
-            <Typography variant="h6" style={{ textAlign: "center" }}>
+          <Stack spacing={2} pt={2} pb={3} sx={{ color: "secondary.main" }}>
+            <Typography variant="body2" style={{ textAlign: "center" }}>
               Adresa: Izvorska 7a, Barajevo
             </Typography>
-            <Typography variant="h6" style={{ textAlign: "center" }}>
+            <Typography variant="body2" style={{ textAlign: "center" }}>
               Telefon: 066 / 5333335
             </Typography>
-            <Typography variant="h6" style={{ textAlign: "center" }}>
+            <Typography variant="body2" style={{ textAlign: "center" }}>
               Email: infinity@infinity.com
             </Typography>
           </Stack>
@@ -45,7 +45,7 @@ export const Kontakt = () => {
             width={"80%"}
             height={"350px"}
             style={{
-              border: 0,
+              border: "2px solid #5DEBD7",
               display: "flex",
               alignItems: "center",
               margin: "auto",
@@ -54,6 +54,11 @@ export const Kontakt = () => {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"></iframe>
         </div>
+        <img
+          src={vector1}
+          alt="infinity pool house"
+          className="vector-bottom"
+        />
       </motion.div>
       <Footer />
     </div>
