@@ -63,7 +63,7 @@ export const Admin = () => {
           label="Filter by Date"
           type="date"
           sx={{ mt: 4 }}
-          value={selectedDate || new Date().toISOString().split("T")[0]}
+          value={selectedDate}
           onChange={handleDateChange}
           InputLabelProps={{
             shrink: true,
