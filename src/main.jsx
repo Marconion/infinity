@@ -4,13 +4,16 @@ import App from "./App.jsx";
 import "./index.css";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-import { RouterProvider, createHashRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createHashRouter,
+} from "react-router-dom";
 import { Galerija } from "./components/Galerija.jsx";
 import { Kontakt } from "./components/Kontakt.jsx";
 import { RezervacijePage } from "./components/ReservacijePage.jsx";
 import { Ponuda } from "./components/Ponuda.jsx";
-import { DateContext, DateProvider } from "./contexts/DateContext.jsx";
-import { Home } from "./components/Home.jsx";
+import { DateProvider } from "./contexts/DateContext.jsx";
 import { SelectedItemsContextProvider } from "./contexts/SelectedItemsContext.jsx";
 import { PriceProvider } from "./contexts/PriceContext.jsx";
 import { TotalPersonsProvider } from "./contexts/TotalPersonsContext.jsx";
@@ -19,10 +22,9 @@ import { PhoneErrorProvider } from "./contexts/PhoneErrorContext.jsx";
 import { FormRefProvider } from "./contexts/FormRefContext.jsx";
 import { PotvrdaPage } from "./components/PotvrdaPage.jsx";
 import Login from "./components/Login.jsx";
-import BazeniTabsAdmin from "./components/BazeniTabsAdmin.jsx";
-import HorizontalLinearStepperAdmin from "./components/StepperAdmin.jsx";
 import { Admin } from "./components/Admin.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 const theme = createTheme({
   palette: {
@@ -40,7 +42,7 @@ const theme = createTheme({
   },
 });
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,

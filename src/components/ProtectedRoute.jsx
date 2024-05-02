@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
-import { Route, Navigate } from "react-router-dom";
+import { Route, Navigate, Routes } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 function ProtectedRoute({ path, element }) {
-  const { currentUser } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
-  return currentUser ? (
-    <Route path={path} element={element} />
+  return isLoggedIn ? (
+    <Routes>
+      <Route path={`${path}/*`} element={element} />
+    </Routes>
   ) : (
     <Navigate to="/login" />
   );
