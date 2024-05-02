@@ -112,7 +112,7 @@ export const Admin = () => {
                             fontSize: "12px",
                             m: 1,
                           }}>
-                          {reservation.phone}
+                          Tel: {reservation.phone}
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
@@ -124,7 +124,15 @@ export const Admin = () => {
                             fontSize: "12px",
                             m: 1,
                           }}>
-                          {reservation.selected.join(", ")}
+                          <div
+                            style={{
+                              border: "1px solid black",
+                              borderRadius: "5px",
+                              padding: "3px",
+                              backgroundColor: "#C5FF95",
+                            }}>
+                            {reservation.selected.join(", ")}
+                          </div>
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
