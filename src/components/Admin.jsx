@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./Navbar";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, TextField, Typography } from "@mui/material";
 
 export const Admin = () => {
   const [reservations, setReservations] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     // fetch("http://localhost:8050/posts")
@@ -15,6 +16,10 @@ export const Admin = () => {
       });
   }, []);
   console.log(reservations.posts);
+
+  const handleDateChange = (e) => {
+    setSelectedDate(e.target.value);
+  };
 
   const handleDelete = async (id, userType) => {
     if (userType === "users") {
@@ -53,6 +58,17 @@ export const Admin = () => {
         p={1}
         m={3}>
         <Typography variant="h5">Brisanje rezervacija</Typography>
+        <TextField
+          id="date"
+          label="Filter by Date"
+          type="date"
+          sx={{ mt: 2 }}
+          value={selectedDate}
+          onChange={handleDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
       </Stack>
       <Stack
         sx={{ m: 1 }}
@@ -60,10 +76,18 @@ export const Admin = () => {
         justifyContent={"space-between"}>
         {reservations.posts &&
           reservations.posts
-            .map((reservation) => ({
-              ...reservation,
-              date: new Date(reservation.date.split(".").reverse().join("-")),
-            }))
+            .map((reservation) => {
+              const [day, month, year] = reservation.date.split(".");
+              return {
+                ...reservation,
+                date: new Date(Date.UTC(year, month - 1, day)),
+              };
+            })
+            .filter(
+              (reservation) =>
+                !selectedDate ||
+                reservation.date.toISOString().split("T")[0] === selectedDate
+            )
             .sort((a, b) => a.date - b.date)
             .map(
               (reservation) =>
