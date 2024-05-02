@@ -42,7 +42,7 @@ const theme = createTheme({
   },
 });
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <App />,
