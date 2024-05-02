@@ -1,15 +1,16 @@
 import "../App.css";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Stack, Typography, Button } from "@mui/material";
 import naslovnaSlika from "../assets/images/Infinity-1.jpg";
 import misli from "../assets/misli";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Opis } from "../components/Opis";
 import { Footer } from "./Footer";
 import { PriceContext } from "../contexts/PriceContext";
 import { SelectedItemsContext } from "../contexts/SelectedItemsContext";
+import { ScrollToTop } from "./ScrollToTop";
 
 export const Home = () => {
   const matches = useMediaQuery("(max-width:768px)");
@@ -29,6 +30,7 @@ export const Home = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}>
+      <ScrollToTop />
       <Stack>
         <Stack className="image-container">
           <img

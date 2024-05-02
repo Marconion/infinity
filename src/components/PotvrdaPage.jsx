@@ -4,6 +4,7 @@ import NavBar from "./Navbar";
 import { Footer } from "./Footer";
 import logo from "../assets/images/infinity-house-logo-1.png";
 import vector1 from "../assets/design_images/Vector 1.png";
+import { ScrollToTop } from "./ScrollToTop";
 
 export const PotvrdaPage = () => {
   function redirectHome() {
@@ -18,6 +19,7 @@ export const PotvrdaPage = () => {
 
   return (
     <Stack sx={{ height: "100vh" }}>
+      <ScrollToTop />
       <NavBar />
       <img src={vector1} alt="infinity pool house" className="vector-top" />
       <Container>

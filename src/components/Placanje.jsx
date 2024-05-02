@@ -12,6 +12,7 @@ import { TotalPersonsContext } from "../contexts/TotalPersonsContext";
 import { FormInputContext } from "../contexts/FormInputContext";
 import { PhoneErrorContext } from "../contexts/PhoneErrorContext";
 import emailjs from "@emailjs/browser";
+import { ScrollToTop } from "./ScrollToTop";
 
 export const Placanje = () => {
   const [name, setName] = useState("");
@@ -103,6 +104,7 @@ export const Placanje = () => {
 
   return (
     <div>
+      <ScrollToTop />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
