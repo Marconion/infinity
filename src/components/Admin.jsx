@@ -15,7 +15,7 @@ export const Admin = () => {
         setReservations(postsData);
       });
   }, []);
-  console.log(reservations.posts);
+  //   console.log(reservations.posts);
 
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
@@ -57,13 +57,13 @@ export const Admin = () => {
         justifyContent={"space-between"}
         p={1}
         m={3}>
-        <Typography variant="h5">Brisanje rezervacija</Typography>
+        <Typography variant="h5">Upravljanje rezervacija</Typography>
         <TextField
           id="date"
           label="Filter by Date"
           type="date"
-          sx={{ mt: 2 }}
-          value={selectedDate}
+          sx={{ mt: 4 }}
+          value={selectedDate || new Date().toISOString().split("T")[0]}
           onChange={handleDateChange}
           InputLabelProps={{
             shrink: true,
@@ -93,16 +93,11 @@ export const Admin = () => {
               (reservation) =>
                 reservation.userType !== "user" && (
                   <Grid
-                    spacing={2}
                     p={0.5}
                     justifyContent={"space-between"}
                     sx={{ border: "1px solid black", width: "100%" }}
                     key={reservation.id}>
-                    <Grid
-                      container
-                      justifyContent={"space-between"}
-                      //   item
-                      xs={12}>
+                    <Grid container justifyContent={"space-between"}>
                       <Grid item xs={4}>
                         <Typography
                           variant="h5"
@@ -136,7 +131,10 @@ export const Admin = () => {
                             fontSize: "12px",
                             m: 1,
                           }}>
-                          Tel: {reservation.phone}
+                          {/* <div style={{ marginRight: 2 }}>Tel: </div> */}
+                          <a href={`tel: ${reservation.phone}`}>
+                            {reservation.phone}
+                          </a>
                         </Typography>
                       </Grid>
                       <Grid
