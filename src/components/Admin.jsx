@@ -62,13 +62,30 @@ export const Admin = () => {
           id="date"
           label="Filter by Date"
           type="date"
-          sx={{ mt: 4, zIndex: -1 }}
+          sx={{ mt: 4 }}
           value={selectedDate || new Date().toISOString().split("T")[0]}
           onChange={handleDateChange}
           InputLabelProps={{
             shrink: true,
           }}
         />
+        <Typography variant="body2" mt={4}>
+          Broj rezervacija:{" "}
+          {reservations.posts &&
+            reservations.posts
+              .map((reservation) => {
+                const [day, month, year] = reservation.date.split(".");
+                return {
+                  ...reservation,
+                  date: new Date(Date.UTC(year, month - 1, day)),
+                };
+              })
+              .filter(
+                (reservation) =>
+                  !selectedDate ||
+                  reservation.date.toISOString().split("T")[0] === selectedDate
+              ).length}
+        </Typography>
       </Stack>
       <Stack
         sx={{ m: 1 }}

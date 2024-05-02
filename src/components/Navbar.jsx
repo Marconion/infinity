@@ -12,7 +12,7 @@ export default function NavBar() {
   const matches = useMediaQuery("(max-width:768px)");
 
   return (
-    <Box sx={{ position: "sticky", top: 0, zIndex: 1 }}>
+    <Box sx={{ position: "sticky", top: 0, zIndex: 1000 }}>
       <AppBar position="static" sx={{ width: "100%" }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Link
